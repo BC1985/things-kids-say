@@ -1,0 +1,19 @@
+#logo {
+    background: teal;
+    text-align: center;
+    color: white;
+    padding: 5%;
+    font-family: "Mouse Memoirs";
+  }
+  .navlinks {
+    display: flex;
+    justify-content: space-between;
+  }
+  .navlinks li {
+    list-style-type: none;
+  }
+  .navlinks a {
+    color: white;
+    text-decoration: none;
+  }
+  
