@@ -6,7 +6,7 @@ import { ContextProvider } from "./Context";
 import Nav from "./components/Nav/Nav";
 import AddQuote from "./components/AddQuote/AddQuote";
 import FullList from "./components/FullList/FullList";
-import LandingText from "./components/LadingPage/LandingPage";
+import LandingPage from "./components/LandingPage/LandingPage"
 import RandomQuote from "./components/RandomQuote/RandomQuote";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
       <Nav />
       <Switch>
         <ContextProvider>
-          <Route exact path="/" component={LandingText} />
+          <Route exact path="/" component={LandingPage} />
           <Route path="/list" component={FullList} />
           <Route path="/random" component={RandomQuote} />
           <Route path="/add" component={AddQuote} />
