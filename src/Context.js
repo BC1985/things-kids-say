@@ -8,7 +8,7 @@ function ContextProvider({ children }) {
   const [sayings, setSayings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const uri = `${process.env.CONNECTION_URI}/sayings`;
+  const uri = 'http://localhost:5000/sayings';
 
   // fetch data from api
   useEffect(() => {

@@ -1,6 +1,6 @@
 export const apiService = {
     addNewEntry(entry) {
-      return fetch(`${process.env.CONNECTION_URI}/sayings/add`, {
+      return fetch('http://localhost:5000/sayings/add', {
         method: "POST",
         headers: {
           "content-type": "application/json"
