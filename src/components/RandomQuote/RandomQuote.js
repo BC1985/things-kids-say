@@ -38,6 +38,10 @@ function RandomQuote() {
         "{generateRandomQuote()}"
       </h2>
       <button
+        style={{
+          backgroundColor: "teal",
+          padding:"0.5em 1em"
+        }}
         type="button"
         className="btn btn-success"
         onClick={getRandomQuote}
