@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Pagination({ quotesPerPage, totalQuotes, paginate }) {
   const pageNumbers = [];
 
-  for (let i = 1; i < Math.ceil(totalQuotes / quotesPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalQuotes / quotesPerPage); i++) {
     pageNumbers.push(i);
   }
   return (
