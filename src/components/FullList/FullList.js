@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import "./FullList.css";
+import "./Fulllist.css";
 import { Link } from "react-router-dom";
 import Quote from "../Quote/Quote";
 import Pagination from "../Pagination/Pagination";
