@@ -20,6 +20,10 @@ function AddQuote() {
     if (!name.match(validName)) {
       return "Please enter valid characters for name.";
     }
+    const validAge = new RegExp(/^[0-9]*$/);
+    if(!age.match(validAge)){
+      return "Age must be numbers only"
+    }
   };
 
   // enable submit button only when all fields are filled out
@@ -64,12 +68,11 @@ function AddQuote() {
       <h2 className="text-center childish-font mb-5">
         Your kid said something adorable or hilarious? Add it to the collection
       </h2>
-      <form className="form-group d-flex flex-column">
+      <form className="form-group">
+        <div className="row no-gutters d-flex">
         <div
-          className="d-flex flex-row justify-content-between"
-          style={{ width: "40%" }}
         >
-          <div className="d-flex flex-column ">
+          <div className="d-flex flex-column mr-4">
             <label className="childish-font">Child's name</label>
             <input
               type="text"
@@ -79,13 +82,17 @@ function AddQuote() {
               required
             />
           </div>
+          </div>
 
-          <div className="d-flex flex-column">
+          <div>
             <label className="childish-font">Age</label>
             <input
-              type="number"
+              type="text" 
+              oninput="this.value=this.value.slice(0,this.maxLength)"
+              maxLength="2"
+              min="1"            
               value={age}
-              className="form-control shadow-sm mb-3"
+              className="form-control shadow-sm mb-3 col-3"
               onChange={e => setAge(e.target.value)}
               required
             />
@@ -95,7 +102,7 @@ function AddQuote() {
           {hasError && errorMessage}
         </p>
         <label className="childish-font">They said what?</label>
-        <input
+        <textarea
           type="text"
           value={content}
           className="form-control shadow-sm mb-3"
