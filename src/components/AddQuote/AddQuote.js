@@ -88,7 +88,7 @@ function AddQuote() {
             <label className="childish-font">Age</label>
             <input
               type="text" 
-              oninput="this.value=this.value.slice(0,this.maxLength)"
+              pattern="\d*"
               maxLength="2"
               min="1"            
               value={age}
