@@ -36,9 +36,9 @@ Project is created with:
 
 
 ### Screenshots
-<img src="src/Images/tks_screenshot1.png" width="300">
-<img src="src/Images/tks_screenshot2.png" width="300">
-<img src="src/Images/tks_screenshot3.png" width="300">
+<img src="src/Images/tks_screenshot1.png" width="550">
+<img src="src/Images/tks_screenshot2.png" width="400">
+<img src="src/Images/tks_screenshot3.png" width="550">
 
 
 
