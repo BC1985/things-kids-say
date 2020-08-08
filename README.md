@@ -8,21 +8,22 @@
 * [Screenshots](#screenshots)
 
 ### General Info
-I had the idea of building this app during a year in which I worked with a group of 4 year olds when I was constantly being struck by their innocent wisdom and antics. I compiled the funniest things they said during that time and posted them to a database I created using MongoDB on the backend and designed a React client with Bootstrap for other parents or educators to post their favorite quotes by young children.
+I had the idea of building this app during a year in which I worked with a group of 4 year olds when I was constantly being struck by their innocent wisdom and antics. I compiled the funniest things they said during that time and posted them to a database which I created using MongoDB and using React as a client.
 
 
 ### Technologies
 Project is created with:
-* React
+* React utilizing React hooks
 * CSS3
 * Bootstrap
 
 ### Setup
-Clone this repo to your desktop and run `npm install` to install all the dependencies. When you're done, type `npm start`.
+- Clone the [API Repo](https://github.com/BC1985/things_kids_say_api) and run `npm start`.
+- Clone this repo to your desktop and run `npm install` to install all the dependencies. When you're done, type `npm start`.
 
 ### Features 
 * Random colors on landing page refresh 
-* Responsive layout using 
+* Responsive layout
 * Input form for uploading quotes to database
 * Get random quotes from database or full list
 
