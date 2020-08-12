@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Nav.css";
-function Nav() {
+function Nav(props) {
   const logoStyle = {
     background: "teal",
     textAlign: "center",
     color: "white",
     fontFamily: "Mouse Memoirs"
   };
+  const {isSignedIn} = props
 
   return (
     <>
@@ -22,8 +23,8 @@ function Nav() {
             </Link>
           </li>
           <li>
-            <Link to="/add" className="nav-link link">
-              Add quote
+            <Link to={isSignedIn? 'add':'sign-in'} className="nav-link link">
+              {isSignedIn ? 'Add Quote': 'Sign in'}
             </Link>
           </li>
         </ul>
