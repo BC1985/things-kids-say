@@ -12,7 +12,7 @@ function AddQuote() {
 
   // validation logic for input
   const validateInput = () => {
-    const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'\/$ ]+$/i);
+    const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
     if (!content.match(validContent)) {
       return "Please enter valid characters for content, no special symbols.";
     }
