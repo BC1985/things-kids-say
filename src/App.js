@@ -12,10 +12,10 @@ import SignIn from "./components/Sign-In/Sign-in";
 
 function App() {
 
-  const [isSignedIn, setIsSignedIn] = useState(false)
+  const [isSignedIn] = useState(false)
   return (
     <Router>
-      <Nav isLoggedIn={isSignedIn} />
+      <Nav isSignedIn={isSignedIn} />
       <Switch>
         <ContextProvider>
           <Route exact path="/" component={LandingPage} />
