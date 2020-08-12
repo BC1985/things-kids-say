@@ -1,5 +1,12 @@
 # Things Kids Say
 
+#### Add and browse through funny quotes by little kids. 
+
+## [Live app](https://things-kids-say.netlify.app/)
+
+
+
+
 ## Table of Content
 * [General Info](#general-info)
 * [Technologies](#technologies)
@@ -29,9 +36,9 @@ Project is created with:
 
 
 ### Screenshots
-<img src="src/Images/tks_screenshot1.png" width="300">
-<img src="src/Images/tks_screenshot2.png" width="300">
-<img src="src/Images/tks_screenshot3.png" width="300">
+<img src="src/Images/tks_screenshot1.png" width="550">
+<img src="src/Images/tks_screenshot2.png" width="400">
+<img src="src/Images/tks_screenshot3.png" width="550">
 
 
 
