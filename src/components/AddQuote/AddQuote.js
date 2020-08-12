@@ -110,13 +110,14 @@ function AddQuote() {
           required
         />
       </form>
-      <input
-        type={hasError ? "disabled" : "submit"}
-        value="Submit"
+      <button
+        type={hasError ? "disabled" : "button"}             
         className="btn btn-outline-primary mt-5 font-weight-bold"
         disabled={!isEnabled}
         onClick={onSubmit}
-      />
+        >Submit
+      </button>
+      
       {quotesSubmitted > 0 && <ThankYou />}
       <Link to="/">
         <p className=" mt-5 font-weight-bold">Back to homepage</p>

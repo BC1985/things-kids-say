@@ -5,4 +5,8 @@
   .thank-you-wrapper {
     margin: 5% auto;
   }
+
+  button.btn:disabled{
+    pointer-events: none;
+  }
   
