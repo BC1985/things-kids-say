@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiService } from "../../Services/apiServices";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -7,13 +8,14 @@ function SignIn() {
     /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/
   );
 
-  function validateInput() {
+  function validateInput(e) {
+    e.preventDefault();
     if (!pattern.test(email)) {
       setIsInputError(true);
-      setEmail("")
-
+      setEmail("");
     } else {
       setIsInputError(false);
+      apiService.getToken(email);
     }
   }
   return (
