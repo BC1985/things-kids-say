@@ -17,7 +17,7 @@ export const apiService = {
   },
 
   postUser(user) {
-    return fetch(`${process.env.CONNECTION_URI}/users/add`, {
+    return fetch("http://localhost:5000/users/add", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -32,10 +32,11 @@ export const apiService = {
     });
   },
 
-  getToken: async credentials => {
+  getToken: async (email, password) => {
     const url = "http://localhost:5000/login";
     const res = await axios.post(url, {
-      email: credentials,
+      email: email,
+      password: password,
     });
     localStorage.setItem("jwt token", res.data);
   },
