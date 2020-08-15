@@ -9,6 +9,7 @@ import FullList from "./components/FullList/FullList";
 import LandingPage from "./components/LandingPage/LandingPage"
 import RandomQuote from "./components/RandomQuote/RandomQuote";
 import SignIn from "./components/Sign-In/Sign-in";
+import Login from "./components/Login/login";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/random" component={RandomQuote} />
           <Route path="/add" component={AddQuote} />
           <Route path="/sign-in" component={SignIn} />
+          <Route path="/login" component={Login} />
         </ContextProvider>
       </Switch>
     </Router>
