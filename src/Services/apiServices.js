@@ -1,4 +1,3 @@
-import axios from "axios";
 export const apiService = {
   addNewEntry(entry) {
     return fetch("http://localhost:5000/sayings/add", {
@@ -30,14 +29,5 @@ export const apiService = {
         res.json();
       }
     });
-  },
-
-  getToken: async (email, password) => {
-    const url = "http://localhost:5000/login";
-    const res = await axios.post(url, {
-      email: email,
-      password: password,
-    });
-    localStorage.setItem("jwt token", res.data);
   },
 };

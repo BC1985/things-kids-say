@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -6,14 +7,27 @@ function Login() {
   const [error, setError] = useState("");
   
 
+  const getToken = async (email, password) => {
+    try {
+      const url = "http://localhost:5000/login";
+      const res = await axios.post(url, {
+        email: email,
+        password: password,
+      });
+      localStorage.setItem("jwt token", res.data);
+    } catch (err) {
+      setError("invalid credentials");
+    }
+  };
   const handleSubmit = e => {
     e.preventDefault();
+    getToken(email, password);
   };
 
-  const isEnabled = email && password
+  const isEnabled = email && password;
   return (
-    <div className="container childish-font">
-      <h1 className="mt-3 ">Login</h1>
+    <div className="container">
+      <h1 className="mt-3 childish-font">Login</h1>
       <form className="form-group p-3" onSubmit={handleSubmit}>
           <label className="col-form-label">Email</label>
         <input
