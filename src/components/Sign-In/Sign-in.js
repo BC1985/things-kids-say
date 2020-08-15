@@ -14,13 +14,13 @@ function SignIn() {
     /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[\S]+/
   );
   const handleSubmit = e => {
-          const credentials = { email: email, password: password };
-          e.preventDefault();
-          const passwordError = showPasswordError();
-          const emailError = showEmailError();
-          emailError ? setIsEmailError(true) : setIsEmailError(false);
-          passwordError ? setIsPasswordError(true) : setIsPasswordError(false);
-          apiService.postUser(credentials)     
+    const credentials = { email: email, password: password };
+    e.preventDefault();
+    const passwordError = showPasswordError();
+    const emailError = showEmailError();
+    emailError ? setIsEmailError(true) : setIsEmailError(false);
+    passwordError ? setIsPasswordError(true) : setIsPasswordError(false);
+    apiService.postUser(credentials);
   };
 
   const showEmailError = () => {
