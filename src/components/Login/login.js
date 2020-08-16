@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function Login() {
+function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,6 +14,7 @@ function Login() {
         password: password,
       });
       localStorage.setItem("jwt token", res.data);
+      props.history.push("/");
     } catch (err) {
       setError("invalid credentials");
     }
