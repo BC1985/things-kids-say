@@ -15,19 +15,22 @@ export const apiService = {
     });
   },
 
-  postUser(user) {
-    return fetch("http://localhost:5000/users/add", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    }).then(res => {
+  postUser: async user => {
+    try {
+      const res = await fetch("http://localhost:5000/users/add", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await res.json();
       if (!res.ok) {
-        res.json().then(e => Promise.reject(e));
-      } else {
-        res.json();
+        throw new Error(res.status);
       }
-    });
+      localStorage.setItem("sign up token", data.token);
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 };
