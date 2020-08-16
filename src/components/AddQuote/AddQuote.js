@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { apiService } from "../../Services/apiServices";
 import { Link } from "react-router-dom";
 import "./AddQuote.css";
 
-function AddQuote() {
+function AddQuote(props) {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [age, setAge] = useState("");
   const [hasError, setHasError] = useState(false);
   const [quotesSubmitted, setQuotesSubmitted] = useState(0);
 
+  useEffect(() => {
+    const token = localStorage.getItem("jwt token");
+    if (!token) {
+      props.history.push("/login");
+    }
+  }, []);
   // validation logic for input
   const validateInput = () => {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
@@ -21,8 +27,8 @@ function AddQuote() {
       return "Please enter valid characters for name.";
     }
     const validAge = new RegExp(/^[0-9]*$/);
-    if(!age.match(validAge)){
-      return "Age must be numbers only"
+    if (!age.match(validAge)) {
+      return "Age must be numbers only";
     }
   };
 
@@ -41,7 +47,7 @@ function AddQuote() {
       apiService.addNewEntry({
         kid_name: name,
         content,
-        age
+        age,
       });
       setHasError(false);
       setName("");
@@ -70,8 +76,6 @@ function AddQuote() {
       </h2>
       <form className="form-group">
         <div className="row no-gutters d-flex">
-        <div
-        >
           <div className="d-flex flex-column mr-4">
             <label className="childish-font">Child's name</label>
             <input
@@ -82,15 +86,14 @@ function AddQuote() {
               required
             />
           </div>
-          </div>
 
           <div>
             <label className="childish-font">Age</label>
             <input
-              type="text" 
+              type="text"
               pattern="\d*"
               maxLength="2"
-              min="1"            
+              min="1"
               value={age}
               className="form-control shadow-sm mb-3 col-3"
               onChange={e => setAge(e.target.value)}
@@ -111,13 +114,14 @@ function AddQuote() {
         />
       </form>
       <button
-        type={hasError ? "disabled" : "button"}             
+        type={hasError ? "disabled" : "button"}
         className="btn btn-outline-primary mt-5 font-weight-bold"
         disabled={!isEnabled}
         onClick={onSubmit}
-        >Submit
+      >
+        Submit
       </button>
-      
+
       {quotesSubmitted > 0 && <ThankYou />}
       <Link to="/">
         <p className=" mt-5 font-weight-bold">Back to homepage</p>
