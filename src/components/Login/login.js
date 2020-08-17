@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,6 +52,7 @@ function Login(props) {
           Submit
         </button>
       </form>
+      <p className="text-center">Dont' have an account? <Link to="/sign-in"> Sign up</Link></p>
     </div>
   );
 }
