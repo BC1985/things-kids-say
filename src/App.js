@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -13,7 +13,18 @@ import Login from "./components/Login/login";
 
 function App() {
 
-  const [isSignedIn] = useState(false)
+  const [isSignedIn, setIsSignedIn] = useState(false)
+
+  useEffect(() => {
+    const userAlreadyLoggedIn = localStorage.getItem('jwt token')
+    if (userAlreadyLoggedIn) {
+        setIsSignedIn(true)            
+    }
+  }, []);
+
+  function logInUser(){
+    setIsSignedIn(true)    
+  }
   return (
     <Router>
       <Nav isSignedIn={isSignedIn} />
@@ -23,7 +34,11 @@ function App() {
           <Route path="/list" component={FullList} />
           <Route path="/random" component={RandomQuote} />
           <Route path="/add" component={AddQuote} />
-          <Route path="/sign-in" component={SignIn} />
+          <Route path="/signup" 
+            render={(props)=>(
+              <SignIn {...props} loginUser={logInUser} isSignedIn={isSignedIn}/>
+            )}
+          />
           <Route path="/login" component={Login} />
         </ContextProvider>
       </Switch>

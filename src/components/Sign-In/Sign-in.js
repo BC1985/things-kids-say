@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { apiService } from "../../Services/apiServices";
 
-function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function SignIn(props) {
+  const [email, setEmail] = useState("groot@123.com");
+  const [password, setPassword] = useState("Groot123$");
   const [isEmailError, setIsEmailError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
 
@@ -14,13 +14,20 @@ function SignIn() {
     /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[\S]+/
   );
   const handleSubmit = e => {
-    const credentials = { email: email, password: password };
-    e.preventDefault();
-    const passwordError = showPasswordError();
-    const emailError = showEmailError();
-    emailError ? setIsEmailError(true) : setIsEmailError(false);
-    passwordError ? setIsPasswordError(true) : setIsPasswordError(false);
-    apiService.postUser(credentials);
+    try{
+      const credentials = { email: email, password: password };
+      e.preventDefault();
+      const passwordError = showPasswordError();
+      const emailError = showEmailError();
+      emailError ? setIsEmailError(true) : setIsEmailError(false);
+      passwordError ? setIsPasswordError(true) : setIsPasswordError(false);
+      apiService.postUser(credentials);
+      props.logInUser()
+      props.history.push('/')
+
+    }catch(err){
+      throw new Error(err)
+    } 
   };
 
   const showEmailError = () => {
