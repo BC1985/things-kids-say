@@ -36,7 +36,7 @@ function App() {
           <Route path="/add" component={AddQuote} />
           <Route path="/signup" 
             render={(props)=>(
-              <SignIn {...props} loginUser={logInUser} isSignedIn={isSignedIn}/>
+              <SignIn {...props} logInUser={logInUser} isSignedIn={isSignedIn}/>
             )}
           />
           <Route path="/login" component={Login} />
