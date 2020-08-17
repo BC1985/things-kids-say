@@ -28,7 +28,7 @@ export const apiService = {
       if (!res.ok) {
         throw new Error(res.status);
       }
-      localStorage.setItem("sign up token", data.token);
+      localStorage.setItem("jwt token", data.token);
     } catch (err) {
       throw new Error(err);
     }
