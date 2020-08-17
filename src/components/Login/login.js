@@ -52,7 +52,7 @@ function Login(props) {
           Submit
         </button>
       </form>
-      <p className="text-center">Dont' have an account? <Link to="/sign-in"> Sign up</Link></p>
+      <p className="text-center">Dont' have an account? <Link to="/signup"> Sign up</Link></p>
     </div>
   );
 }
