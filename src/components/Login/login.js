@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { isSignedIn, logInUser } = props;
+
+  useEffect(() => {
+    // Redirect to home page if already logged in
+    if (isSignedIn) {
+      props.history.push("/");
+    }
+  });
 
   const getToken = async (email, password) => {
     try {
@@ -20,6 +29,7 @@ function Login(props) {
     }
   };
   const handleSubmit = e => {
+    logInUser();
     e.preventDefault();
     getToken(email, password);
   };
@@ -52,7 +62,9 @@ function Login(props) {
           Submit
         </button>
       </form>
-      <p className="text-center">Dont' have an account? <Link to="/signup"> Sign up</Link></p>
+      <p className="text-center">
+        Dont' have an account? <Link to="/signup"> Sign up</Link>
+      </p>
     </div>
   );
 }
