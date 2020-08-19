@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -22,12 +22,18 @@ function App() {
     }
   }, []);
 
-  function logInUser(){
+  const logInUser = () =>{
     setIsSignedIn(true)    
   }
+
+  const logOut = () =>{
+    setIsSignedIn(false)
+    localStorage.removeItem('jwt token')
+  }
+
   return (
     <Router>
-      <Nav isSignedIn={isSignedIn} />
+      <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser}/>
       <Switch>
         <ContextProvider>
           <Route exact path="/" component={LandingPage} />
@@ -39,7 +45,11 @@ function App() {
               <SignIn {...props} logInUser={logInUser} isSignedIn={isSignedIn}/>
             )}
           />
-          <Route path="/login" component={Login} />
+          <Route path="/login"
+            render={(props)=>(
+              <Login {...props} isSignedIn={isSignedIn} logInUser={logInUser}/>
+            )}
+          />
         </ContextProvider>
       </Switch>
     </Router>

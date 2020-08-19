@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.css";
 function Nav(props) {
@@ -8,8 +8,7 @@ function Nav(props) {
     color: "white",
     fontFamily: "Mouse Memoirs"
   };
-  const {isSignedIn} = props
-
+  const {isSignedIn, logOut} = props
   return (
     <>
       <nav style={logoStyle} className="d-flex justify-content-between">
@@ -25,6 +24,11 @@ function Nav(props) {
           <li>
             <Link to={isSignedIn? 'add':'login'} className="nav-link link">
               {isSignedIn ? 'Add Quote': 'Log in'}
+            </Link>
+          </li>
+          <li>
+            <Link to='/' className="nav-link link" onClick={logOut}>
+              {isSignedIn && 'Log out'}
             </Link>
           </li>
         </ul>
