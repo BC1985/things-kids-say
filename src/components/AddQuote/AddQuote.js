@@ -15,7 +15,7 @@ function AddQuote(props) {
     if (!token) {
       props.history.push("/login");
     }
-  }, []);
+  });
   // validation logic for input
   const validateInput = () => {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
@@ -39,16 +39,17 @@ function AddQuote(props) {
   const errorMessage = validateInput();
 
   const onSubmit = e => {
+    const quote = {
+      kid_name:name, 
+      age:age, 
+      content:content
+    }
     e.preventDefault();
     const inputNotValid = validateInput();
     if (inputNotValid) {
       setHasError(true);
     } else {
-      apiService.addNewEntry({
-        kid_name: name,
-        content,
-        age,
-      });
+      apiService.addNewEntry(quote);
       setHasError(false);
       setName("");
       setAge("");
