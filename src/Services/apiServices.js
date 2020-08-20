@@ -36,4 +36,13 @@ export const apiService = {
       throw new Error(err);
     }
   },
+  seeIfUserExists: async (enteredUser)=>{
+      const req = await fetch('http://localhost:5000/users');
+      const data = await req.json()
+      const existingUser = data.filter((user)=> user.email === enteredUser.email)
+      if (existingUser.length !==0) {
+        console.log('existing user',existingUser)
+       return true
+      }
+}
 };

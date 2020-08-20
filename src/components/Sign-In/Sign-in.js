@@ -6,6 +6,7 @@ function SignIn(props) {
   const [password, setPassword] = useState("Groot123$");
   const [isEmailError, setIsEmailError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
+  const [doesUserExist, setDoesUserExist] = useState(false);
 
   const emailPattern = new RegExp(
     /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/
@@ -13,21 +14,28 @@ function SignIn(props) {
   const passwordPattern = new RegExp(
     /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[\S]+/
   );
-  const handleSubmit = e => {
-    try{
+  const handleSubmit = async e => {
+    try {
       const credentials = { email: email, password: password };
       e.preventDefault();
       const passwordError = showPasswordError();
       const emailError = showEmailError();
       emailError ? setIsEmailError(true) : setIsEmailError(false);
       passwordError ? setIsPasswordError(true) : setIsPasswordError(false);
-      apiService.postUser(credentials);
-      props.logInUser()
-      props.history.push('/')
 
-    }catch(err){
-      throw new Error(err)
-    } 
+      // check if user already exists
+      const userExists = await apiService.seeIfUserExists(credentials);
+      userExists ? setDoesUserExist(true) : setDoesUserExist(false);
+      try {
+        await apiService.postUser(credentials);
+        props.logInUser();
+        props.history.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
   };
 
   const showEmailError = () => {
@@ -67,6 +75,7 @@ function SignIn(props) {
               onChange={e => setEmail(e.target.value)}
             />
             <p className="font-weight-light text-danger">
+              {doesUserExist && "User already exists"}
               {isEmailError && showEmailError()}
             </p>
             <label>Password</label>
