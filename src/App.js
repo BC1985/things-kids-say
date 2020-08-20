@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -10,7 +10,7 @@ import LandingPage from "./components/LandingPage/LandingPage"
 import RandomQuote from "./components/RandomQuote/RandomQuote";
 import SignIn from "./components/Sign-In/Sign-in";
 import Login from "./components/Login/login";
-
+import  ErrorBoundary from "./components/ErrorBoundary";
 function App() {
 
   const [isSignedIn, setIsSignedIn] = useState(false)
@@ -33,6 +33,7 @@ function App() {
 
   return (
     <Router>
+      <ErrorBoundary>      
       <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser}/>
       <Switch>
         <ContextProvider>
@@ -52,6 +53,7 @@ function App() {
           />
         </ContextProvider>
       </Switch>
+      </ErrorBoundary>
     </Router>
   );
 }
