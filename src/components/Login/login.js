@@ -6,6 +6,7 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isSignedIn, logInUser } = props;
 
@@ -16,8 +17,16 @@ function Login(props) {
     }
   });
 
+  const Spinner = () => {
+    return (
+      <div className="spinner-grow text-primary" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
+  };
   const getToken = async (email, password) => {
     try {
+      setError("");
       const url = "http://localhost:5000/login";
       const res = await axios.post(url, {
         email: email,
@@ -28,10 +37,12 @@ function Login(props) {
       logInUser();
     } catch (err) {
       setError("Invalid login credentials");
+      setIsLoading(false);
     }
   };
   const handleSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const request = getToken(email, password);
       await request;
@@ -71,6 +82,7 @@ function Login(props) {
       <p className="text-center">
         Dont' have an account? <Link to="/signup"> Sign up</Link>
       </p>
+      {isLoading && <Spinner />}
     </div>
   );
 }
