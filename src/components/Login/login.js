@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,14 +25,19 @@ function Login(props) {
       });
       localStorage.setItem("jwt token", res.data);
       props.history.push("/");
+      logInUser();
     } catch (err) {
-      setError("invalid credentials");
+      setError("Invalid login credentials");
     }
   };
-  const handleSubmit = e => {
-    logInUser();
+  const handleSubmit = async e => {
     e.preventDefault();
-    getToken(email, password);
+    try {
+      const request = getToken(email, password);
+      await request;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isEnabled = email && password;
