@@ -1,59 +1,46 @@
 import React, { useState } from "react";
-import { apiService } from "../../Services/apiServices";
 
 function SignIn(props) {
   const [email, setEmail] = useState("groot@123.com");
   const [password, setPassword] = useState("Groot123$");
-  const [isEmailError, setIsEmailError] = useState(false);
+  const [isEmailError, setIsEmailError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
-  const [doesUserExist, setDoesUserExist] = useState(false);
 
-  const emailPattern = new RegExp(
-    /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/
-  );
-  const passwordPattern = new RegExp(
-    /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[\S]+/
-  );
-  const handleSubmit = async e => {
+  const postUser = async user => {
     try {
-      const credentials = { email: email, password: password };
-      e.preventDefault();
-      const passwordError = showPasswordError();
-      const emailError = showEmailError();
-      emailError ? setIsEmailError(true) : setIsEmailError(false);
-      passwordError ? setIsPasswordError(true) : setIsPasswordError(false);
-
-      // check if user already exists
-      const userExists = await apiService.seeIfUserExists(credentials);
-      userExists ? setDoesUserExist(true) : setDoesUserExist(false);
-      try {
-        await apiService.postUser(credentials);
+      const res = await fetch("http://localhost:5000/users/add", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        // errors from the backend
+        const emailErrors = data.errors.email;
+        const passwordError = data.errors.password;
+        // if there are errors, store in the state and display in UI
+        setIsPasswordError(passwordError);
+        setIsEmailError(emailErrors);
+      } else {
+        // if no errors, redirect to homepage and log in user
         props.logInUser();
         props.history.push("/");
-      } catch (error) {
-        console.log(error);
       }
+      localStorage.setItem("jwt token", data.token);
     } catch (err) {
-      throw new Error(err);
+      console.log(err);
     }
   };
 
-  const showEmailError = () => {
-    if (!emailPattern.test(email)) {
-      return "Please enter valid email";
-    } else {
-      setIsEmailError(false);
-    }
-  };
-  const showPasswordError = () => {
-    if (password.length < 6) {
-      return "must be at least six characters in length ";
-    } else if (password.length > 72) {
-      return "Password must be less than 72 characters";
-    } else if (!passwordPattern.test(password)) {
-      return "Password must contain uppercase, lowecase number and special character";
-    } else {
-      setIsPasswordError(false);
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      const credentials = { email: email.trim(), password: password.trim() };
+      postUser(credentials);
+    } catch (err) {
+      throw new Error(err);
     }
   };
   // Enable sumbmit button only when both fields are populated
@@ -64,7 +51,7 @@ function SignIn(props) {
         <h1 className="childish-font p-3 pt-5">Sign up to post quote</h1>
         <form className="form-group" onSubmit={handleSubmit}>
           <div className="d-flex flex-column col-sm-8">
-            <label className="col-form-label">Please enter email</label>
+            <label className="col-form-label">Email</label>
             <input
               placeholder="ex: me@mydomain.com"
               type="text"
@@ -74,10 +61,7 @@ function SignIn(props) {
               }`}
               onChange={e => setEmail(e.target.value)}
             />
-            <p className="font-weight-light text-danger">
-              {doesUserExist && "User already exists"}
-              {isEmailError && showEmailError()}
-            </p>
+            <p className="font-weight-light text-danger">{isEmailError}</p>
             <label>Password</label>
             <input
               type="password"
@@ -87,9 +71,7 @@ function SignIn(props) {
               }`}
               onChange={e => setPassword(e.target.value)}
             />
-            <p className="font-weight-light text-danger">
-              {isPasswordError && showPasswordError()}
-            </p>
+            <p className="font-weight-light text-danger">{isPasswordError}</p>
             <button
               type="submit"
               disabled={!enabled}
