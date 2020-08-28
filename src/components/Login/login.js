@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Login(props) {
@@ -24,28 +23,50 @@ function Login(props) {
       </div>
     );
   };
-  const getToken = async (email, password) => {
+  const login = async login => {
+    const emailIsEmpty = email.trim() === "";
+    const passwordIsEmpty = password.trim() === "";
     try {
+      if (emailIsEmpty) {
+        setError("Please enter email");
+        setIsLoading(false);
+        throw new Error();
+      }
+      if (passwordIsEmpty) {
+        setError("Please enter password");
+        setIsLoading(false);
+        throw new Error();
+      }
       setError("");
       const url = "http://localhost:5000/login";
-      const res = await axios.post(url, {
-        email: email,
-        password: password,
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(login),
       });
-      localStorage.setItem("jwt token", res.data);
-      props.history.push("/");
-      logInUser();
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error);
+        setIsLoading(false);
+      } else {
+        // get jwt from successful login
+        localStorage.setItem("jwt token", data);
+        props.history.push("/");
+        logInUser();
+      }
     } catch (err) {
-      setError("Invalid login credentials");
-      setIsLoading(false);
+      throw new Error(err);
     }
   };
+
   const handleSubmit = async e => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      const request = getToken(email, password);
-      await request;
+      setIsLoading(true);
+      login({ email: email.trim(), password: password.trim() });
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +75,9 @@ function Login(props) {
   const isEnabled = email && password;
   return (
     <div className="container">
-      <h1 className="mt-3 childish-font">Login</h1>
+      <h1 className="mt-3 childish-font">
+        Login <span>{isLoading && <Spinner />}</span>
+      </h1>
       <form className="form-group p-3" onSubmit={handleSubmit}>
         <label className="col-form-label">Email</label>
         <input
@@ -66,11 +89,11 @@ function Login(props) {
         <label className="col-form-label">Password</label>
         <input
           className="form-control"
-          type="text"
+          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <p className="mt-2 text-danger">{error ? error : " "}</p>
+        <p className="mt-2 text-danger">{error}</p>
         <button
           type="submit"
           className="btn btn-outline-primary font-weight-bold col-sm-4 mt-3"
@@ -79,10 +102,10 @@ function Login(props) {
           Submit
         </button>
       </form>
+      <p className="text-primary">Forgot password?</p>
       <p className="text-center">
         Dont' have an account? <Link to="/signup"> Sign up</Link>
       </p>
-      {isLoading && <Spinner />}
     </div>
   );
 }
