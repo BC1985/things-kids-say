@@ -8,6 +8,7 @@ const Quote = ({ sayings }) => {
         <h3 style={{ color: "gray" }}>
           {quote.kid_name}, age {quote.age}
         </h3>
+        <p className="ml-4">Submitted by {quote.username}</p>
       </li>
     );
   });
