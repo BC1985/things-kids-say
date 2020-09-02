@@ -11,6 +11,7 @@ import RandomQuote from "./components/RandomQuote/RandomQuote";
 import SignIn from "./components/Sign-In/Sign-in";
 import Login from "./components/Login/login";
 import  ErrorBoundary from "./components/ErrorBoundary";
+import EditQuote from "./components/EditQuote/EditQuote"
 function App() {
 
   const [isSignedIn, setIsSignedIn] = useState(false)
@@ -39,6 +40,7 @@ function App() {
         <ContextProvider>
           <Route exact path="/" component={LandingPage} />
           <Route path="/list" component={FullList} />
+          <Route path="/edit/:id" render={props=>(<EditQuote {...props}/>)} />
           <Route path="/random" component={RandomQuote} />
           <Route path="/add" component={AddQuote} />
           <Route path="/signup" 
