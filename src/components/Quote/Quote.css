@@ -1,0 +1,8 @@
+.item a{
+    visibility: hidden;
+}
+.item:hover a{
+    visibility: visible;
+}
+
+/* when cursor hovers over div make icon appear */
