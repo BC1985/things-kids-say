@@ -3,7 +3,9 @@ import React, { useState } from "react";
 function SignIn(props) {
   const [email, setEmail] = useState("groot@123.com");
   const [password, setPassword] = useState("Groot123$");
+  const [username, setUsername] = useState("");
   const [isEmailError, setIsEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
 
   const postUser = async user => {
@@ -18,10 +20,13 @@ function SignIn(props) {
       const data = await res.json();
       if (!res.ok) {
         // errors from the backend
-        const emailErrors = data.errors.email;
-        const passwordError = data.errors.password;
+        const { email, password, username } = data.errors;
+        const emailErrors = email;
+        const passwordError = password;
+        const usernameError = username;
         // if there are errors, store in the state and display in UI
         setIsPasswordError(passwordError);
+        setUsernameError(usernameError);
         setIsEmailError(emailErrors);
       } else {
         // if no errors, redirect to homepage and log in user
@@ -37,7 +42,11 @@ function SignIn(props) {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const credentials = { email: email.trim(), password: password.trim() };
+      const credentials = {
+        email: email.trim(),
+        password: password.trim(),
+        username: username.trim(),
+      };
       postUser(credentials);
     } catch (err) {
       throw new Error(err);
@@ -71,7 +80,16 @@ function SignIn(props) {
               }`}
               onChange={e => setPassword(e.target.value)}
             />
-            <p className="font-weight-light text-danger">{isPasswordError}</p>
+            <label>Username</label>
+            <input
+              type="text"
+              value={username}
+              className={`form-control shadow-sm mb-3 ${
+                usernameError && "border-danger"
+              }`}
+              onChange={e => setUsername(e.target.value)}
+            />
+            <p className="font-weight-light text-danger">{usernameError}</p>
             <button
               type="submit"
               disabled={!enabled}
