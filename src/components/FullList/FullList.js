@@ -40,7 +40,10 @@ function FullList() {
             ))}
           </select>
         </div>
-        <Quote sayings={currentQuotes} />
+        {/* Render paginated quote list */}
+        {currentQuotes.map((quote, index) => {
+          return <Quote quote={quote} key={index} />;
+        })}
 
         <ul className="list-group">
           <Pagination
