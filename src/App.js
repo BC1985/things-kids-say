@@ -12,6 +12,7 @@ import SignIn from "./components/Sign-In/Sign-in";
 import Login from "./components/Login/login";
 import  ErrorBoundary from "./components/ErrorBoundary";
 import EditQuote from "./components/EditQuote/EditQuote"
+import MyQuotes from "./components/MyQuotes/MyQuotes"
 function App() {
 
   const [isSignedIn, setIsSignedIn] = useState(false)
@@ -53,6 +54,7 @@ function App() {
               <Login {...props} isSignedIn={isSignedIn} logInUser={logInUser}/>
             )}
           />
+          <Route path="/my_quotes/user/:id" render={props=><MyQuotes {...props} isSignedIn={isSignedIn}/>}/>
         </ContextProvider>
       </Switch>
       </ErrorBoundary>
