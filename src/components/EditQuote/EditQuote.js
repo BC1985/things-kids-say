@@ -37,19 +37,26 @@ function EditQuote(props) {
 
   const onSubmit = async e => {
     e.preventDefault();
+    try{
+      const token = localStorage.getItem("jwt token")
+      const url = `http://localhost:5000/sayings/update/${quoteId}`;
+      const res = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          "authorization": `bearer ${token}`
+        },
+        body: JSON.stringify(quote),
+      });
+  
+      const data = await res.json();
+      setSuccessMessage(data.message)
+      
+    }catch(err){
+      console.log(err)
+    }
 
-    const url = `http://localhost:5000/sayings/update/${quoteId}`;
-    const res = await fetch(url, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(quote),
-    });
-
-    const data = await res.json();
-    setSuccessMessage("Your quote has been successfully edited.")
-  };
+    }
 
   return (
     <>
