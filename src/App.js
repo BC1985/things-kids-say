@@ -13,6 +13,8 @@ import Login from "./components/Login/login";
 import  ErrorBoundary from "./components/ErrorBoundary";
 import EditQuote from "./components/EditQuote/EditQuote"
 import MyQuotes from "./components/MyQuotes/MyQuotes"
+import SideNav from "./components/Sidenav/Sidenav";
+
 function App() {
 
   const [isSignedIn, setIsSignedIn] = useState(false)
@@ -36,6 +38,7 @@ function App() {
   return (
     <Router>
       <ErrorBoundary>      
+      <SideNav/>
       <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser}/>
       <Switch>
         <ContextProvider>
