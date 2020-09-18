@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { apiService } from "../../Services/apiServices"
 import "./Nav.css";
 function Nav(props) {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
 
   
   useEffect(()=>{   

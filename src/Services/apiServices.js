@@ -58,7 +58,7 @@ export const apiService = {
       console.log("Not logged in");
     } else {
       let data = await res.json();
-      return data.username;
+      return data;
     }
   },
 };
