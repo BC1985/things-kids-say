@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-// import {withRouter} from "react-router"
-import { context } from "../../Context";
-
+import  UserIcon from "./UserIcon/UserIcon";
 import { Link } from "react-router-dom";
+import { apiService } from "../../Services/apiServices"
 import "./Nav.css";
 function Nav(props) {
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = localStorage.getItem("jwt token");
+  const [user, setUser] = useState("");
 
-      const res = await fetch(`http://localhost:5000/users/username`, {
-        method: "GET",
-        headers: {
-          authorization: `bearer ${token}`,
-        },
-      });
-      let data = await res.json();
-      setUser(data);
-      // let username = data._id
-    };
-    fetchData();
-  }, []);
+  
+  useEffect(()=>{   
+      const fetchUsername = async()=>{
+        const res = await apiService.getUsername()
+        if (res === undefined) {
+          return null
+        }else{
+          setUser(res)
+        }
+      }
+      fetchUsername();      
+  },[props.isSignedIn])
 
   const logoStyle = {
     background: "teal",
@@ -36,7 +32,6 @@ function Nav(props) {
         <Link className="nav-link link" to="/">
           <h1>Things Kids Say</h1>
         </Link>
-        <p>Welcome {user.username}</p>
         <ul className="nav justify-content-end d-flex align-content-center">
           <li className="nav-item">
             <Link to="/list" className="nav-link link">
@@ -60,6 +55,9 @@ function Nav(props) {
             <Link to='/' className="nav-link link" onClick={logOut}>
               {isSignedIn && 'Log out'}
             </Link>
+          </li>
+          <li>
+            {isSignedIn && <UserIcon username={user}/>}
           </li>
         </ul>
       </nav>
