@@ -1,7 +1,6 @@
 import React from "react";
 
 function UserIcon(props) {
-  
   const iconStyle = {
     borderRadius: "50%",
     width: "2.5em",
@@ -11,7 +10,9 @@ function UserIcon(props) {
     fontSize: "1.2em",
   };
 
-  let userInitial = props.username.charAt(0);
+  let username = props.username.username;
+  let userInitial = String(username).charAt(0);
+
   return (
     <div className="user-icon mr-2" style={iconStyle}>
       <div
