@@ -14,14 +14,19 @@ function UserIcon(props) {
   let userInitial = String(username).charAt(0);
 
   return (
-    <div className="user-icon mr-2" style={iconStyle}>
-      <div
-        className="d-flex justify-content-center"
-        style={{ fontStretch: "expanded" }}
-      >
-        {userInitial}
-      </div>
-    </div>
+    <>
+      {/* Hide icon as long as username is "undefined" */}
+      {userInitial !== "u" && (
+        <div className="user-icon mr-2" style={iconStyle}>
+          <div
+            className="d-flex justify-content-center"
+            style={{ fontStretch: "expanded" }}
+          >
+            {userInitial}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
