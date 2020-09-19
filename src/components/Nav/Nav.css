@@ -1,8 +1,31 @@
 .link {
-    color: white;
-    font-size: 1.3em;
-  }
-  .link:hover {
-    color: #fffdeb;
-  }
+  color: white;
+  font-size: 1.3em;
+}
+.nav-link{
+  font-family: "Mouse Memoirs"
+
+}
+.link:hover {
+  color: #fffdeb;
+}
+.nav{
+  display: flex;
+  justify-content: flex-end;
   
+}
+.nav-wrapper{
+  background-color:teal;
+
+  
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-wrapper{
+    height:3em
+  }
+  .nav-link{
+    display: none;
+  }
+ 
+}
