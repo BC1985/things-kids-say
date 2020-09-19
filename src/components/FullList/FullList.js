@@ -4,19 +4,12 @@ import { Link } from "react-router-dom";
 import Quote from "../Quote/Quote";
 import Pagination from "../Pagination/Pagination";
 import { context } from "../../Context";
-
+import Spinner from "../Spinner/Spinner";
 function FullList() {
   const { sayings, isLoading } = useContext(context);
   const [currentPage, setCurrentPage] = useState(1);
   const [quotesPerPage, setQuotesPerPage] = useState(5);
 
-  const Spinner = () => {
-    return (
-      <div className="spinner-grow text-primary" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-    );
-  };
   // determine index for pagination
   const indexOfLastQuote = currentPage * quotesPerPage;
   const indexOfFirstQuote = indexOfLastQuote - quotesPerPage;
