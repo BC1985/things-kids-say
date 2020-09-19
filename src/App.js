@@ -42,11 +42,15 @@ function App() {
   };
 
   const navProps = {
-    logOut:logOut,
-    logInUser: logInUser,
-    isSideNavOpen: isSideNavOpen,
-    toggleSideNav: toggleSideNav,
-    isSignedIn: isSignedIn
+    logOut,
+    logInUser,
+    isSideNavOpen,
+    toggleSideNav,
+    isSignedIn,
+  }
+  const loginProps ={
+    isSignedIn,
+    logInUser
   }
 
   return (
@@ -60,17 +64,11 @@ function App() {
           <Route path="/list" component={FullList} />
           <Route path="/edit/:id" render={props=>(<EditQuote {...props}/>)} />
           <Route path="/random" component={RandomQuote} />
-          <Route path="/add">{ isSignedIn ? <AddQuote/> : <Login /> }</Route>
+          <Route path="/add" render={props=>{ return isSignedIn ? <AddQuote {...props} isSignedIn={isSignedIn} /> : <Login logInUser={logInUser} /> }}/>
           <Route path="/signup" 
-            render={(props)=>(
-              <SignIn {...props} logInUser={logInUser} isSignedIn={isSignedIn}/>
-            )}
-          />
+            render={()=>(<SignIn {...loginProps} />)}/>
           <Route path="/login"
-            render={(props)=>(
-              <Login {...props} isSignedIn={isSignedIn} logInUser={logInUser}/>
-            )}
-          />
+            render={()=>(<Login {...loginProps}/>)}/>
           <Route path="/my_quotes/user/:id" render={props=><MyQuotes {...props} isSignedIn={isSignedIn}/>}/>
         </ContextProvider>
       </Switch>
