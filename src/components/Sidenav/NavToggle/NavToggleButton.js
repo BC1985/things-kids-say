@@ -2,7 +2,7 @@ import React from "react";
 import "./NavToggleButton.css";
 
 const NavToggleButton = props => {
-  const { isSideNavOpen, openSideNav } = props;
+  const { isSideNavOpen, toggleSideNav } = props;
   const styles = {
     hamburgerIcon: {
       position: "absolute",
@@ -32,7 +32,7 @@ const NavToggleButton = props => {
   };
   return (
     <div>
-      <div id="hamburger-icon" onClick={openSideNav}>
+      <div id="hamburger-icon" onClick={toggleSideNav}>
         <div style={{ ...styles.line, ...styles.lineTop }} />
         <div style={{ ...styles.line, ...styles.lineMiddle }} />
         <div style={{ ...styles.line, ...styles.lineBottom }} />
