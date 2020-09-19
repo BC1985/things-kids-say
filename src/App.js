@@ -41,13 +41,21 @@ function App() {
     setIsSideNavOpen(!isSideNavOpen);
   };
 
+  const navProps = {
+    logOut:logOut,
+    logInUser: logInUser,
+    isSideNavOpen: isSideNavOpen,
+    toggleSideNav: toggleSideNav,
+    isSignedIn: isSignedIn
+  }
+
   return (
     <Router>
       <ErrorBoundary>      
       <Switch>
         <ContextProvider>
-          <SideNav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser} isSideNavOpen={isSideNavOpen} toggleSideNav={toggleSideNav}/>
-          <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser} isSideNavOpen={isSideNavOpen} toggleSideNav={toggleSideNav}/>
+          <SideNav {...navProps}/>
+          <Nav {...navProps}/>
           <Route exact path="/" component={LandingPage} />
           <Route path="/list" component={FullList} />
           <Route path="/edit/:id" render={props=>(<EditQuote {...props}/>)} />
