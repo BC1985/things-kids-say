@@ -3,11 +3,14 @@ import React from "react";
 function UserIcon(props) {
   const iconStyle = {
     borderRadius: "50%",
-    width: "2.5em",
+    width: "30px",
+    height: "30px",
     background: "#9eb3c3",
     color: "white",
-    padding: "10px",
-    fontSize: "1.2em",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: "Lato",
   };
 
   let username = props.username.username;
@@ -17,13 +20,8 @@ function UserIcon(props) {
     <>
       {/* Hide icon as long as username is "undefined" */}
       {userInitial !== "u" && (
-        <div className="user-icon mr-2" style={iconStyle}>
-          <div
-            className="d-flex justify-content-center"
-            style={{ fontStretch: "expanded" }}
-          >
-            {userInitial}
-          </div>
+        <div className="user-icon" style={iconStyle}>
+          {userInitial}
         </div>
       )}
     </>
