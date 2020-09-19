@@ -3,26 +3,8 @@
     padding: 15px;
     z-index: 4;
   }
-  @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-    #hamburger-icon {
+  @media only screen and (min-width: 601px) {
+    #hamburger-icon{
       display: none;
     }
   }
-  /* --- iPad --- */
-  @media only screen and (min-device-width: 668px) and (max-device-width: 1200px) and (-webkit-min-device-pixel-ratio: 2) {
-    #hamburger-icon {
-      display: none;
-    }
-  }
-  /* ----------- Non-Retina Screens ----------- */
-  @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
-    #hamburger-icon {
-      display: none;
-    }
-  }
-  @media screen and (min-device-width: 1600px) {
-    #hamburger-icon {
-      display: none;
-    }
-  }
-  
