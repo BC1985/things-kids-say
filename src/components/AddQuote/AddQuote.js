@@ -10,12 +10,6 @@ function AddQuote(props) {
   const [hasError, setHasError] = useState(false);
   const [quotesSubmitted, setQuotesSubmitted] = useState(0);
 
-  useEffect(() => {
-    const token = localStorage.getItem("jwt token");
-    if (!token) {
-      props.history.push("/login");
-    }
-  });
   // validation logic for input
   const validateInput = () => {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);

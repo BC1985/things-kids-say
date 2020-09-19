@@ -60,7 +60,7 @@ function App() {
           <Route path="/list" component={FullList} />
           <Route path="/edit/:id" render={props=>(<EditQuote {...props}/>)} />
           <Route path="/random" component={RandomQuote} />
-          <Route path="/add" component={AddQuote} />
+          <Route path="/add">{ isSignedIn ? <AddQuote/> : <Login /> }</Route>
           <Route path="/signup" 
             render={(props)=>(
               <SignIn {...props} logInUser={logInUser} isSignedIn={isSignedIn}/>
