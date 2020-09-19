@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import  UserIcon from "./UserIcon/UserIcon";
 import { Link } from "react-router-dom";
-import { apiService } from "../../Services/apiServices"
+import { context } from "../../Context";
 import "./Nav.css";
-function Nav(props) {
-  const [user, setUser] = useState({});
 
-  
-  useEffect(()=>{   
-      const fetchUsername = async()=>{
-        const res = await apiService.getUsername()
-        if (res === undefined) {
-          return null
-        }else{
-          setUser(res)
-        }
-      }
-      fetchUsername();      
-  },[props.isSignedIn])
+function Nav(props) {
+  const {user} = useContext(context)
 
   const logoStyle = {
     background: "teal",
