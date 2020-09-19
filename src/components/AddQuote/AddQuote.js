@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { apiService } from "../../Services/apiServices";
 import { Link } from "react-router-dom";
 import "./AddQuote.css";
@@ -9,7 +9,7 @@ function AddQuote(props) {
   const [age, setAge] = useState("");
   const [hasError, setHasError] = useState(false);
   const [quotesSubmitted, setQuotesSubmitted] = useState(0);
-
+  const [error, setError] = useState("");
   // validation logic for input
   const validateInput = () => {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
@@ -32,23 +32,33 @@ function AddQuote(props) {
 
   const errorMessage = validateInput();
 
-  const onSubmit = e => {
-    const quote = {
-      kid_name:name, 
-      age:age, 
-      content:content
-    }
+  const onSubmit = async e => {
     e.preventDefault();
-    const inputNotValid = validateInput();
-    if (inputNotValid) {
-      setHasError(true);
-    } else {
-      apiService.addNewEntry(quote);
-      setHasError(false);
-      setName("");
-      setAge("");
-      setContent("");
-      setQuotesSubmitted(quotesSubmitted + 1);
+    try {
+      const inputNotValid = validateInput();
+      if (inputNotValid) {
+        setHasError(true);
+      } else {
+        const quote = {
+          kid_name: name,
+          age: age,
+          content: content,
+        };
+        const res = await apiService.addNewEntry(quote);
+
+        console.log(res);
+        if (!res.ok) {
+          setError(res.statusText);
+        } else {
+          setHasError(false);
+          setName("");
+          setAge("");
+          setContent("");
+          setQuotesSubmitted(quotesSubmitted + 1);
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -62,6 +72,10 @@ function AddQuote(props) {
         </h3>
       </div>
     );
+  };
+
+  const Error = () => {
+    return <h2>{error}</h2>;
   };
 
   return (
@@ -116,7 +130,7 @@ function AddQuote(props) {
       >
         Submit
       </button>
-
+      {error && <Error />}
       {quotesSubmitted > 0 && <ThankYou />}
       <Link to="/">
         <p className=" mt-5 font-weight-bold">Back to homepage</p>
