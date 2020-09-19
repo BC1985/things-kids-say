@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import NavToggleButton from "../Sidenav/NavToggle/NavToggleButton";
-
-import "./Sidenav.css";
+import { context } from "../../Context";
 import { NavLink } from "react-router-dom";
+import UserIcon from "../Nav/UserIcon/UserIcon";
+import "./Sidenav.css";
 
-function SideNav() {
+function SideNav(props) {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
- 
+  const {user} = useContext(context)
 
   const openSideNav = () => {
     setIsSideNavOpen(!isSideNavOpen);
@@ -44,8 +45,8 @@ function SideNav() {
         isSideNavOpen={isSideNavOpen}
       />
       <nav>
-        <p>{user.username}</p>
         <ul className={sideNavClass}>
+        <li><UserIcon username={user}/></li>
           {routes.map(route => (
             <li key={route.name}>
               <NavLink to={route.to} onClick={route.onClick}>
