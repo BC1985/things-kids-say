@@ -4,6 +4,7 @@
   text-decoration: none;
 }
 .nav-links {
+  font-family: "Mouse Memoirs";
   position: fixed;
   z-index: 3;
   transform: translateX(-105%);
@@ -11,11 +12,12 @@
   background: teal;
   color: whitesmoke;
   display: flex;
-  width: 60%;
+  width: 40%;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
   margin-block-start: 0;
+  padding-inline-start: 10px;
 }
 .nav-links.open {
   transform: translateX(0%);
