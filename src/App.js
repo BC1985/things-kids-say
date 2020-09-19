@@ -38,10 +38,10 @@ function App() {
   return (
     <Router>
       <ErrorBoundary>      
-      <SideNav/>
-      <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser}/>
       <Switch>
         <ContextProvider>
+          <SideNav isSignedIn={isSignedIn}/>
+          <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser}/>
           <Route exact path="/" component={LandingPage} />
           <Route path="/list" component={FullList} />
           <Route path="/edit/:id" render={props=>(<EditQuote {...props}/>)} />
