@@ -18,6 +18,7 @@ import SideNav from "./components/Sidenav/Sidenav";
 function App() {
 
   const [isSignedIn, setIsSignedIn] = useState(false)
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
   useEffect(() => {
     const userAlreadyLoggedIn = localStorage.getItem('jwt token')
@@ -33,15 +34,20 @@ function App() {
   const logOut = () =>{
     setIsSignedIn(false)
     localStorage.removeItem('jwt token')
+    toggleSideNav()
+    
   }
+  const toggleSideNav = () => {
+    setIsSideNavOpen(!isSideNavOpen);
+  };
 
   return (
     <Router>
       <ErrorBoundary>      
       <Switch>
         <ContextProvider>
-          <SideNav isSignedIn={isSignedIn}/>
-          <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser}/>
+          <SideNav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser} isSideNavOpen={isSideNavOpen} toggleSideNav={toggleSideNav}/>
+          <Nav isSignedIn={isSignedIn} logOut={logOut} logInUser={logInUser} isSideNavOpen={isSideNavOpen} toggleSideNav={toggleSideNav}/>
           <Route exact path="/" component={LandingPage} />
           <Route path="/list" component={FullList} />
           <Route path="/edit/:id" render={props=>(<EditQuote {...props}/>)} />

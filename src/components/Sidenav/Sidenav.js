@@ -6,32 +6,30 @@ import UserIcon from "../Nav/UserIcon/UserIcon";
 import "./Sidenav.css";
 
 function SideNav(props) {
-  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-  const {user} = useContext(context)
+  const { toggleSideNav, isSideNavOpen, logOut, isSignedIn } = props;
+  const { user } = useContext(context);
 
-  const openSideNav = () => {
-    setIsSideNavOpen(!isSideNavOpen);
-  };
   const routes = [
     {
       to: "/list",
       name: "All quotes",
-      onClick: openSideNav,
+      onClick: toggleSideNav,
     },
     {
       to: "/add",
       name: "Add quote",
-      onClick: openSideNav,
+      onClick: toggleSideNav,
     },
     {
-      to: `my_quotes/user/${user._id}`,
-      name: "My quotes",
-      onClick: openSideNav,
+      // to: `my_quotes/user/${user._id}`,
+      to: isSignedIn ? `my_quotes/user/${user._id}` : "login",
+      name: isSignedIn ? "My Quotes" : "Log in",
+      onClick: toggleSideNav,
     },
     {
       to: "/",
-      name: "Log out",
-      onClick: openSideNav,
+      name: isSignedIn ? "Log out" : "",
+      onClick: logOut,
     },
   ];
 
@@ -41,12 +39,14 @@ function SideNav(props) {
   return (
     <>
       <NavToggleButton
-        openSideNav={openSideNav}
+        toggleSideNav={toggleSideNav}
         isSideNavOpen={isSideNavOpen}
       />
       <nav>
         <ul className={sideNavClass}>
-        <li><UserIcon username={user}/></li>
+          <li>
+            <UserIcon username={user} />
+          </li>
           {routes.map(route => (
             <li key={route.name}>
               <NavLink to={route.to} onClick={route.onClick}>
