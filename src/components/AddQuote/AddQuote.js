@@ -48,7 +48,7 @@ function AddQuote(props) {
 
         console.log(res);
         if (!res.ok) {
-          setError(res.statusText);
+          setError(res);
         } else {
           setHasError(false);
           setName("");

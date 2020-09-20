@@ -11,7 +11,7 @@ export const apiService = {
     });
     const data = await res.json()
     if (!res.ok) {
-      throw new Error(res.status);
+      return `${res.status} ${res.statusText}`;
     } else{
       return data;
     }
