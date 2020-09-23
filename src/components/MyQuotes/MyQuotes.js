@@ -3,17 +3,19 @@ import { context } from "../../Context";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../Spinner/Spinner";
 
-function MyQuotes() {
+function MyQuotes(props) {
   const { sayings } = useContext(context);
   const [filteredArray, setFilteredArray] = useState([]);
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    const userId = props.match.params.id;
     const fetchData = async () => {
       const token = localStorage.getItem("jwt token");
 
-      const res = await fetch(`http://localhost:5000/users/username`, {
+      const res = await fetch(`http://localhost:5000/users/${userId}`, {
         method: "GET",
         headers: {
           authorization: `bearer ${token}`,
@@ -35,24 +37,32 @@ function MyQuotes() {
     />
   );
 
+  const QuotesList = () => {
+    return (
+      <div>
+        <h1 className="mb-4">
+          {username}'s quotes: ({filteredArray.length})
+        </h1>
+        {filteredArray.map(quote => {
+          return (
+            <li
+              key={quote._id}
+              style={{ listStyleType: "none" }}
+              className="mb-3"
+            >
+              <div className="item d-flex">
+                <p className="item">"{quote.content}"</p>
+                <Link to={`/edit/${quote._id}`}>{editIcon}</Link>
+              </div>
+            </li>
+          );
+        })}
+      </div>
+    );
+  };
   return (
-    <div className="container">
-      <div>{username}'s quotes</div>
-      {filteredArray.map(quote => {
-        return (
-          <li
-            key={quote._id}
-            style={{ listStyleType: "none" }}
-            className="mb-5"
-          >
-            <div className="item d-flex">
-              <h2 className="item">"{quote.content}"</h2>
-              <Link to={`/edit/${quote._id}`}>{editIcon}</Link>
-            </div>
-          </li>
-        );
-        // return <Quote quote={m} key={index} isSignedIn={props.isSignedIn}/>;
-      })}
+    <div className="container mt-3">
+      {filteredArray.length > 0 ? <QuotesList /> : <Spinner />}
     </div>
   );
 }
