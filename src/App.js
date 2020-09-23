@@ -14,6 +14,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import EditQuote from "./components/EditQuote/EditQuote";
 import MyQuotes from "./components/MyQuotes/MyQuotes";
 import SideNav from "./components/Sidenav/Sidenav";
+import Settings from "./components/settings/Settings";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -76,7 +77,8 @@ function App() {
               }}
             />
             <Route path="/signup" render={() => <SignIn {...loginProps} />} />
-            <Route path="/login" render={() => <Login {...loginProps} />} />
+            <Route path="/login" render={(props) => <Login {...props}{...loginProps} />} />
+            <Route path="/settings/user/:id" render={(props) => <Settings {...props} {...loginProps} />} />
             <Route
               path="/my_quotes/user/:id"
               render={props => <MyQuotes {...props} isSignedIn={isSignedIn} />}
