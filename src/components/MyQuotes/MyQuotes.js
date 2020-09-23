@@ -28,7 +28,7 @@ function MyQuotes(props) {
       setFilteredArray(userQuotes);
     };
     fetchData();
-  }, [sayings]);
+  }, [sayings, props.match.params.id]);
 
   const editIcon = (
     <FontAwesomeIcon
