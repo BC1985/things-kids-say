@@ -32,23 +32,15 @@ function Nav(props) {
             </Link>
           </li>
           <li>
-            <Link
-              to={isSignedIn ? `my_quotes/user/${user._id}` : ""}
-              className="nav-link link"
-            >
-              {isSignedIn ? "My Quotes" : ""}
-            </Link>
+            {isSignedIn && (
+              <Link to="/" className="nav-link link" onClick={logOut}>Log out</Link>
+            )}
           </li>
           <li>
-            <Link to="/" className="nav-link link" onClick={logOut}>
-              {isSignedIn && "Log out"}
-            </Link>
-          </li>
-          <li>
-            <Link to="/" className="nav-link link">
+            <Link to={`/settings/user/${user._id}`} className="nav-link link">
               {isSignedIn && <UserIcon username={user} />}
             </Link>
-            </li>
+          </li>
         </ul>
       </nav>
     </div>
