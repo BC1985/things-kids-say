@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
-import { apiService } from "./Services/apiServices"
-require('dotenv').config()
+import { apiService } from "./Services/apiServices";
+require("dotenv").config();
 
 const context = createContext();
 
@@ -10,7 +10,7 @@ function ContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState({});
 
-  const uri = 'http://localhost:5000/sayings';
+  const uri = "http://localhost:5000/sayings";
 
   // fetch data from api
   useEffect(() => {
@@ -20,20 +20,20 @@ function ContextProvider({ children }) {
       setSayings(res.data);
       setIsLoading(false);
     };
-    const fetchUsername = async()=>{
-      const res = await apiService.getUsername()
-      if (res === undefined) {
-        return null
-      }else{
-        setUser(res)
-      }
-    }
     fetchData();
-    fetchUsername()
   }, []);
 
+  const fetchUsername = async () => {
+    const res = await apiService.getUserObject();
+    if (res === undefined) {
+      return null;
+    } else {
+      setUser(res);
+    }
+  };
+
   return (
-    <context.Provider value={{ sayings, isLoading, user }}>
+    <context.Provider value={{ sayings, isLoading, user, fetchUsername }}>
       {children}
     </context.Provider>
   );
