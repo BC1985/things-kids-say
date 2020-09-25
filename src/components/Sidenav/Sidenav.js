@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import NavToggleButton from "../Sidenav/NavToggle/NavToggleButton";
 import { context } from "../../Context";
 import { NavLink } from "react-router-dom";

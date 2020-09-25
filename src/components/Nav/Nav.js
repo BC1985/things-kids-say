@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import UserIcon from "./UserIcon/UserIcon";
 import { Link } from "react-router-dom";
 import "./Nav.css";
@@ -8,9 +8,7 @@ function Nav(props) {
   const { fetchUsername, user } = useContext(context);
   // watch for loggin in, then display icon
   useEffect(() => {
-    {
-      isSignedIn && fetchUsername();
-    }
+    isSignedIn && fetchUsername();
   }, [props.isSignedIn]);
 
   const { isSignedIn, logOut } = props;
