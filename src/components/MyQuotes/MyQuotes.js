@@ -4,28 +4,16 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../Spinner/Spinner";
+import { apiService } from "../../Services/apiServices";
 
 function MyQuotes(props) {
   const { sayings } = useContext(context);
-  const [filteredArray, setFilteredArray] = useState([]);
-  const [username, setUsername] = useState("");
-
+  const [quotesByUser, setQuotesByUser] = useState([]);
   useEffect(() => {
-    const userId = props.match.params.id;
     const fetchData = async () => {
-      const token = localStorage.getItem("jwt token");
-
-      const res = await fetch(`http://localhost:5000/users/${userId}`, {
-        method: "GET",
-        headers: {
-          authorization: `bearer ${token}`,
-        },
-      });
-      let data = await res.json();
-      let user = data.username;
-      setUsername(user);
-      let userQuotes = sayings.filter(x => x.username === user);
-      setFilteredArray(userQuotes);
+      let id = props.match.params.id;
+      const userQuotes = await apiService.getQuotesByUser(id);
+      setQuotesByUser(userQuotes);
     };
     fetchData();
   }, [sayings, props.match.params.id]);
@@ -40,10 +28,8 @@ function MyQuotes(props) {
   const QuotesList = () => {
     return (
       <div>
-        <h1 className="mb-4">
-          {username}'s quotes: ({filteredArray.length})
-        </h1>
-        {filteredArray.map(quote => {
+        <h1 className="mb-4">My quotes</h1>
+        {quotesByUser.map(quote => {
           return (
             <li
               key={quote._id}
@@ -62,7 +48,7 @@ function MyQuotes(props) {
   };
   return (
     <div className="container mt-3">
-      {filteredArray.length > 0 ? <QuotesList /> : <Spinner />}
+      {quotesByUser.length > 0 ? <QuotesList /> : <Spinner />}
     </div>
   );
 }
