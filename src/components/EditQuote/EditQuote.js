@@ -5,6 +5,7 @@ function EditQuote(props) {
   const [quote, setQuote] = useState({});
   const [message, setMessage] = useState("Loading...");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
 
 
   const quoteId = props.match.params.id;
@@ -23,6 +24,7 @@ function EditQuote(props) {
       ...quote,
       [name]: value,
     });
+    String(value).trim() === "" ? setIsDisabled(true) : setIsDisabled(false);
   };
 
   const onSubmit = async e => {
@@ -63,6 +65,7 @@ function EditQuote(props) {
           </div>
           <button
             type="submit"
+            disabled={isDisabled}
             className="btn btn-outline-primary font-weight-bold col-sm-2 mt-3"
           >
             Submit
