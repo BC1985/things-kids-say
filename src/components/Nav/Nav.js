@@ -1,15 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserIcon from "./UserIcon/UserIcon";
 import { Link } from "react-router-dom";
-import { context } from "../../Context";
 import "./Nav.css";
+import { context } from "../../Context";
 
 function Nav(props) {
-  const { user } = useContext(context);
-  
-// watch for loggin in, then display icon
-  useEffect(()=>{
-  },[props.isSignedIn])
+  const { fetchUsername, user } = useContext(context);
+  // watch for loggin in, then display icon
+  useEffect(() => {
+    {
+      isSignedIn && fetchUsername();
+    }
+  }, [props.isSignedIn]);
 
   const { isSignedIn, logOut } = props;
   return (
@@ -33,12 +35,14 @@ function Nav(props) {
           </li>
           <li>
             {isSignedIn && (
-              <Link to="/" className="nav-link link" onClick={logOut}>Log out</Link>
+              <Link to="/" className="nav-link link" onClick={logOut}>
+                Log out
+              </Link>
             )}
           </li>
           <li>
             <Link to={`/settings/user/${user._id}`} className="nav-link link">
-              {isSignedIn && <UserIcon username={user} />}
+              {isSignedIn && <UserIcon username={user.username} />}
             </Link>
           </li>
         </ul>
