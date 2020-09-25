@@ -13,7 +13,7 @@ function UserIcon(props) {
     fontFamily: "Lato",
   };
 
-  let username = props.username.username;
+  let username = props.username;
   let userInitial = String(username).charAt(0);
 
   return (
