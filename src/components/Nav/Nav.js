@@ -6,12 +6,12 @@ import { context } from "../../Context";
 
 function Nav(props) {
   const { fetchUsername, user } = useContext(context);
+  const { isSignedIn, logOut } = props;
   // watch for loggin in, then display icon
   useEffect(() => {
     isSignedIn && fetchUsername();
-  }, [props.isSignedIn]);
+  }, [isSignedIn, fetchUsername]);
 
-  const { isSignedIn, logOut } = props;
   return (
     <div className="nav-wrapper">
       <nav>
