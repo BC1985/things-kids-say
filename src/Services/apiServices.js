@@ -5,14 +5,14 @@ export const apiService = {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "authorization": `bearer ${token}`
+        authorization: `bearer ${token}`
       },
       body: JSON.stringify(entry),
     });
     const data = await res.json()
     if (!res.ok) {
       return `${res.status} ${res.statusText}`;
-    } else{
+    } else {
       return data;
     }
   },
@@ -45,10 +45,10 @@ export const apiService = {
     }
   },
 
-  getUsername: async () => {
+  getUserObject: async () => {
     const token = localStorage.getItem("jwt token");
 
-    const res = await fetch(`http://localhost:5000/users/username`, {
+    const res = await fetch(`http://localhost:5000/users/current-user`, {
       method: "GET",
       headers: {
         authorization: `bearer ${token}`,
@@ -59,6 +59,21 @@ export const apiService = {
     } else {
       let data = await res.json();
       return data;
+    }
+  },
+  getQuotesByUser: async id => {
+    const token = localStorage.getItem("jwt token");
+    const res = await fetch(`http://localhost:5000/sayings/users/${id}`, {
+      method: "GET",
+      headers: {
+        authorization: `bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      console.log(res.statusText);
+    } else {
+      let userQuotes = await res.json();
+      return userQuotes;
     }
   },
 };
