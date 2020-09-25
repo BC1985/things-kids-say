@@ -76,4 +76,31 @@ export const apiService = {
       return userQuotes;
     }
   },
+  getQuoteById: async id => {
+    const res = await fetch(`http://localhost:5000/sayings/${id}`);
+    try {
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        throw new Error(res.statusText);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  updateQuote: async (id, quoteToUpdate) =>{
+    const token = localStorage.getItem("jwt token");
+    const url = `http://localhost:5000/sayings/update/${id}`;
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+      body: JSON.stringify(quoteToUpdate),
+    });
+    const data = await res.json();
+    return data
+  }
 };
