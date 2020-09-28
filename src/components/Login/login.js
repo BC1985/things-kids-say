@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import InputField from "../InputFields/InputField";
+import Spinner from "../Spinner/Spinner"
 
 function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [input, setInput] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { isSignedIn, logInUser } = props;
+  const { email, password } = input;
 
   useEffect(() => {
     // Redirect to home page if already logged in
@@ -16,13 +18,7 @@ function Login(props) {
     }
   });
 
-  const Spinner = () => {
-    return (
-      <div className="spinner-grow text-primary" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-    );
-  };
+
   const login = async login => {
     const emailIsEmpty = email.trim() === "";
     const passwordIsEmpty = password.trim() === "";
@@ -72,6 +68,11 @@ function Login(props) {
     }
   };
 
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setInput(input => ({ ...input, [name]: value }));
+  };
+
   const isEnabled = email && password;
   return (
     <div className="container">
@@ -79,19 +80,19 @@ function Login(props) {
         Login <span>{isLoading && <Spinner />}</span>
       </h1>
       <form className="form-group p-3" onSubmit={handleSubmit}>
-        <label className="col-form-label">Email</label>
-        <input
-          className="form-control"
-          type="text"
+        <InputField
+          title="Email"
+          name="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={handleChange}
         />
-        <label className="col-form-label">Password</label>
-        <input
-          className="form-control"
+
+        <InputField
           type="password"
+          title="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          name="password"
+          onChange={handleChange}
         />
         <p className="mt-2 text-danger">{error}</p>
         <button

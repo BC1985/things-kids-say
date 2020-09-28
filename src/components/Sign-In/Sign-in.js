@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import InputField from "../InputFields/InputField";
 
 function SignIn(props) {
-  const [email, setEmail] = useState("groot@123.com");
-  const [password, setPassword] = useState("Groot123$");
-  const [username, setUsername] = useState("");
+  const [input, setInput] = useState({});
   const [isEmailError, setIsEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
+  const { email, password, username } = input;
 
   const postUser = async user => {
     try {
@@ -18,7 +18,7 @@ function SignIn(props) {
         body: JSON.stringify(user),
       });
       const data = await res.json();
-      if (!res.ok) {
+      if (Object.keys(data).includes("errors")) {
         // errors from the backend
         const { email, password, username } = data.errors;
         const emailErrors = email;
@@ -43,14 +43,18 @@ function SignIn(props) {
     e.preventDefault();
     try {
       const credentials = {
-        email: email.trim(),
-        password: password.trim(),
-        username: username.trim(),
+        email: String(email).trim(),
+        password: String(password).trim(),
+        username: String(username).trim(),
       };
       postUser(credentials);
     } catch (err) {
       throw new Error(err);
     }
+  };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setInput(input => ({ ...input, [name]: value }));
   };
   // Enable sumbmit button only when both fields are populated
   const enabled = email && password;
@@ -60,34 +64,36 @@ function SignIn(props) {
         <h1 className="childish-font p-3 pt-5">Sign up to post quote</h1>
         <form className="form-group" onSubmit={handleSubmit}>
           <div className="d-flex flex-column col-sm-8">
-            <label className="col-form-label">Email</label>
-            <input
+            <InputField
+              name="email"
+              title="Email"
               placeholder="ex: me@mydomain.com"
-              type="text"
               value={email}
               className={`form-control shadow-sm mb-3 ${
                 isEmailError && "border-danger"
               }`}
-              onChange={e => setEmail(e.target.value)}
+              onChange={handleChange}
             />
             <p className="font-weight-light text-danger">{isEmailError}</p>
-            <label>Password</label>
-            <input
+            <InputField
+              name="password"
+              title="Password"
               type="password"
               value={password}
               className={`form-control shadow-sm mb-3 ${
                 isPasswordError && "border-danger"
               }`}
-              onChange={e => setPassword(e.target.value)}
+              onChange={handleChange}
             />
-            <label>Username</label>
-            <input
-              type="text"
+            <p className="font-weight-light text-danger">{isPasswordError}</p>
+            <InputField
+              name="username"
+              title="Username"
               value={username}
               className={`form-control shadow-sm mb-3 ${
                 usernameError && "border-danger"
               }`}
-              onChange={e => setUsername(e.target.value)}
+              onChange={handleChange}
             />
             <p className="font-weight-light text-danger">{usernameError}</p>
             <button

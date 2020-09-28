@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { apiService } from "../../Services/apiServices";
 import { Link } from "react-router-dom";
 import "./AddQuote.css";
+import InputField from "../InputFields/InputField";
+import TextArea from "../InputFields/TextArea";
 
-function AddQuote(props) {
-  const [name, setName] = useState("");
-  const [content, setContent] = useState("");
-  const [age, setAge] = useState("");
-  const [hasError, setHasError] = useState(false);
+function AddQuote() {
+  const [input, setInput] = useState({});
   const [quotesSubmitted, setQuotesSubmitted] = useState(0);
   const [error, setError] = useState("");
+
+  const {kid_name, age, content} = input
   // validation logic for input
   const validateInput = () => {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
@@ -17,49 +18,47 @@ function AddQuote(props) {
       return "Please enter valid characters for content, no special symbols.";
     }
     const validName = new RegExp(/^[a-zA-Z][a-zA-Z\\s]+$/);
-    if (!name.match(validName)) {
+    if (!input.kid_name.match(validName)) {
       return "Please enter valid characters for name.";
     }
-    const validAge = new RegExp(/^[0-9]*$/);
-    if (!age.match(validAge)) {
-      return "Age must be numbers only";
+    const validAge = new RegExp(/^[0-9]{1,2}$/);
+    if (!input.age.match(validAge)) {
+      return "Please enter valid age";
     }
   };
 
   // enable submit button only when all fields are filled out
-  const isEnabled = name && age && content;
-  // error message outputs
-
-  const errorMessage = validateInput();
+  const isEnabled = kid_name && age && content;
 
   const onSubmit = async e => {
     e.preventDefault();
     try {
       const inputNotValid = validateInput();
       if (inputNotValid) {
-        setHasError(true);
+        setError(inputNotValid);
       } else {
         const quote = {
-          kid_name: name,
+          kid_name: kid_name,
           age: age,
           content: content,
         };
         const res = await apiService.addNewEntry(quote);
-
-        console.log(res);
-        if (!res.ok) {
-          setError(res);
+        if (res !== undefined) {
+          setError("");
+          setInput(input => ({ ...input === "" }));
+          setQuotesSubmitted(quotesSubmitted + 1);          
         } else {
-          setHasError(false);
-          setName("");
-          setAge("");
-          setContent("");
-          setQuotesSubmitted(quotesSubmitted + 1);
+          setError(res);
         }
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setInput(input => ({ ...input, [name]: value }));
   };
 
   const ThankYou = () => {
@@ -75,7 +74,7 @@ function AddQuote(props) {
   };
 
   const Error = () => {
-    return <h2>{error}</h2>;
+    return <p className="text-danger">{error}</p>;
   };
 
   return (
@@ -83,54 +82,46 @@ function AddQuote(props) {
       <h2 className="text-center childish-font mb-5">
         Your kid said something adorable or hilarious? Add it to the collection
       </h2>
-      <form className="form-group">
+      <form className="form-group" onSubmit={onSubmit}>
         <div className="row no-gutters d-flex">
           <div className="d-flex flex-column mr-4">
-            <label className="childish-font">Child's name</label>
-            <input
-              type="text"
-              value={name}
-              className="form-control shadow-sm mb-3"
-              onChange={e => setName(e.target.value)}
+            <InputField
               required
+              name="kid_name"
+              title={"Name"}
+              onChange={handleChange}
+              value={kid_name}
             />
-          </div>
-
-          <div>
-            <label className="childish-font">Age</label>
-            <input
-              type="text"
+            <InputField
+              required
+              name="age"
               pattern="\d*"
               maxLength="2"
               min="1"
+              type="number"
+              title={"Age"}
               value={age}
-              className="form-control shadow-sm mb-3 col-3"
-              onChange={e => setAge(e.target.value)}
+              onChange={handleChange}
+            />
+            <TextArea
               required
+              title={"content"}
+              name="content"
+              value={content}
+              onChange={handleChange}
             />
           </div>
         </div>
-        <p className="font-weight-bold text-danger">
-          {hasError && errorMessage}
-        </p>
-        <label className="childish-font">They said what?</label>
-        <textarea
-          type="text"
-          value={content}
-          className="form-control shadow-sm mb-3"
-          onChange={e => setContent(e.target.value)}
-          required
-        />
       </form>
+      {error && <Error />}
       <button
-        type={hasError ? "disabled" : "button"}
+        type={error ? "disabled" : "submit"}
         className="btn btn-outline-primary mt-5 font-weight-bold"
         disabled={!isEnabled}
         onClick={onSubmit}
       >
         Submit
       </button>
-      {error && <Error />}
       {quotesSubmitted > 0 && <ThankYou />}
       <Link to="/">
         <p className=" mt-5 font-weight-bold">Back to homepage</p>

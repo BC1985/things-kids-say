@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiService } from "../../Services/apiServices";
+import InputField from "../InputFields/InputField";
 
 function EditQuote(props) {
   const [quote, setQuote] = useState({});
@@ -41,25 +42,25 @@ function EditQuote(props) {
       {!message && (
         <form onSubmit={onSubmit} className="p-4">
           <div className="d-flex flex-column">
-            <label className="col-form-label">Child's name</label>
-            <input
+            <InputField
+              required
+              title="Child's name"
               value={quote.kid_name}
               name="kid_name"
-              className="form-control"
               onChange={handleChange}
             />
-            <label className="col-form-label">Age</label>
-            <input
+            <InputField
+              required
+              title="Age"
               value={quote.age}
               name="age"
-              className="form-control"
               onChange={handleChange}
             />
-            <label className="col-form-label">They said what?</label>
-            <input
+            <InputField
+              required
+              title="They said what?"
               value={quote.content}
               name="content"
-              className="form-control"
               onChange={handleChange}
             />
           </div>
