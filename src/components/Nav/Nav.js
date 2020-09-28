@@ -38,11 +38,14 @@ function Nav(props) {
               </Link>
             )}
           </li>
+          {isSignedIn && 
           <li>
             <Link to={`/settings/user/${user._id}`} className="nav-link link">
-              {isSignedIn && <UserIcon username={user.username} />}
+              {<UserIcon username={user.username} />}
             </Link>
+          
           </li>
+          }
         </ul>
       </nav>
     </div>
