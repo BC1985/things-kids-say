@@ -12,6 +12,9 @@ const InputField = props => {
         className="form-control shadow-sm mb-3"
         placeholder={props.placeholder}
         name={props.name}
+        pattern={props.pattern}
+        maxLength={props.maxLength}
+        min={props.min}
         value={props.value}
         onChange={props.onChange}
         type={props.type}
