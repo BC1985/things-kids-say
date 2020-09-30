@@ -102,5 +102,19 @@ export const apiService = {
     });
     const data = await res.json();
     return data
+  },
+  deleteQuote: async (id)=>{
+    const token = localStorage.getItem("jwt token");
+    const url = `http://localhost:5000/sayings/${id}`;
+    const res = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${token}`
+      }
+      
+    })
+    const data = await res.json()
+    return data   
   }
-};
+}
