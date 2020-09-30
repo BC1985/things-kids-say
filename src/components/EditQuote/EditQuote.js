@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { apiService } from "../../Services/apiServices";
 import InputField from "../InputFields/InputField";
-
+import DeleteQuote from "../Delete button/DeleteButton";
 function EditQuote(props) {
   const [quote, setQuote] = useState({});
   const [message, setMessage] = useState("Loading...");
@@ -71,6 +71,7 @@ function EditQuote(props) {
           >
             Submit
           </button>
+          <DeleteQuote id={quoteId}/>
         </form>
       )}
       {successMessage}
