@@ -77,9 +77,11 @@ function DeleteQuote(props) {
           </div>
         </div>
         {confirmation.isConfirmed && (
-          <p>
-            {confirmation.message} <Spinner />
-          </p>
+          <div>
+            <span>
+              {confirmation.message} <Spinner />
+            </span>
+          </div>
         )}
       </div>
     </>
