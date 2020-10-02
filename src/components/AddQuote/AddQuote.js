@@ -1,16 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useContext } from "react";
 import { apiService } from "../../Services/apiServices";
 import { Link } from "react-router-dom";
 import "./AddQuote.css";
 import InputField from "../InputFields/InputField";
 import TextArea from "../InputFields/TextArea";
+import { context } from "../../Context";
 
 function AddQuote() {
   const [input, setInput] = useState({});
   const [quotesSubmitted, setQuotesSubmitted] = useState(0);
   const [error, setError] = useState("");
+  const { user } = useContext(context);
 
-  const {kid_name, age, content} = input
+  const { kid_name, age, content } = input;
   // validation logic for input
   const validateInput = () => {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
@@ -45,7 +47,7 @@ function AddQuote() {
         const res = await apiService.addNewEntry(quote);
         if (res !== undefined) {
           setError("");
-          setInput(input => ({ ...input === "" }));
+          setInput(input => ({ ...(input === "") }));
           setQuotesSubmitted(quotesSubmitted + 1);          
         } else {
           setError(res);
@@ -66,8 +68,10 @@ function AddQuote() {
       <div className="thank-you-wrapper">
         <h3 className="childish-font">
           Your quote has been added. You have submitted {quotesSubmitted}{" "}
-          {quotesSubmitted === 1 ? "quote" : "quotes"}. You may add another
-          quote or <Link to="/">click here to return to the homepage</Link>
+          quote(s). You may add another quote or{" "}
+          <Link to={`/settings/user/${user._id}`}>
+            click here to return to your quotes.
+          </Link>
         </h3>
       </div>
     );
@@ -79,30 +83,36 @@ function AddQuote() {
 
   return (
     <div className="container mb-5 mt-5">
-      <h2 className="text-center childish-font mb-5">
+      <h2 className="childish-font mb-5">
         Your kid said something adorable or hilarious? Add it to the collection
       </h2>
-      <form className="form-group" onSubmit={onSubmit}>
-        <div className="row no-gutters d-flex">
-          <div className="d-flex flex-column mr-4">
-            <InputField
-              required
-              name="kid_name"
-              title={"Name"}
-              onChange={handleChange}
-              value={kid_name}
-            />
-            <InputField
-              required
-              name="age"
-              pattern="\d*"
-              maxLength="2"
-              min="1"
-              type="number"
-              title={"Age"}
-              value={age}
-              onChange={handleChange}
-            />
+      <div className="d-flex flex-column">
+        <div className="">
+          <form className="form-group align-self-center" onSubmit={onSubmit}>
+            <div className="row no-gutters">
+              <div className="col-8">
+                <InputField
+                  required
+                  name="kid_name"
+                  title={"Name"}
+                  onChange={handleChange}
+                  value={kid_name}
+                />
+              </div>
+              <div className="col-3 offset-1">
+                <InputField
+                  required
+                  name="age"
+                  pattern="\d*"
+                  maxLength="2"
+                  min="1"
+                  type="number"
+                  title={"Age"}
+                  value={age}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
             <TextArea
               required
               title={"content"}
@@ -110,18 +120,18 @@ function AddQuote() {
               value={content}
               onChange={handleChange}
             />
-          </div>
+            <button
+              type={error ? "disabled" : "submit"}
+              className="btn btn-outline-primary mt-5 font-weight-bold"
+              disabled={!isEnabled}
+              onClick={onSubmit}
+            >
+              Submit
+            </button>
+          </form>
         </div>
-      </form>
+      </div>
       {error && <Error />}
-      <button
-        type={error ? "disabled" : "submit"}
-        className="btn btn-outline-primary mt-5 font-weight-bold"
-        disabled={!isEnabled}
-        onClick={onSubmit}
-      >
-        Submit
-      </button>
       {quotesSubmitted > 0 && <ThankYou />}
       <Link to="/">
         <p className=" mt-5 font-weight-bold">Back to homepage</p>
