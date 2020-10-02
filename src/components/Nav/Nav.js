@@ -9,7 +9,7 @@ function Nav(props) {
   const { isSignedIn, logOut } = props;
   // watch for loggin in, then display icon
   useEffect(() => {
-    isSignedIn && fetchUsername();
+    fetchUsername();
   }, [isSignedIn]);
 
   return (
