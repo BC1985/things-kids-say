@@ -44,9 +44,11 @@ function SideNav(props) {
       />
       <nav>
         <ul className={sideNavClass}>
+          {isSignedIn && (
           <li>
             <UserIcon username={user} />
           </li>
+          )}
           {routes.map(route => (
             <li key={route.name}>
               <NavLink to={route.to} onClick={route.onClick}>
