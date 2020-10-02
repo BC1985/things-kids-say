@@ -10,7 +10,7 @@ function Nav(props) {
   // watch for loggin in, then display icon
   useEffect(() => {
     isSignedIn && fetchUsername();
-  }, [isSignedIn, fetchUsername]);
+  }, [isSignedIn]);
 
   return (
     <div className="nav-wrapper">
