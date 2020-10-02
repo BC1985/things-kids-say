@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import InputField from "../InputFields/InputField";
-import Spinner from "../Spinner/Spinner"
+import Spinner from "../Spinner/Spinner";
 
 function Login(props) {
   const [input, setInput] = useState({});
@@ -17,7 +17,6 @@ function Login(props) {
       props.history.push("/");
     }
   });
-
 
   const login = async login => {
     const emailIsEmpty = email.trim() === "";
@@ -76,37 +75,45 @@ function Login(props) {
   const isEnabled = email && password;
   return (
     <div className="container">
-      <h1 className="mt-3 childish-font">
-        Login <span>{isLoading && <Spinner />}</span>
-      </h1>
-      <form className="form-group p-3" onSubmit={handleSubmit}>
-        <InputField
-          title="Email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-        />
+      <div className="ml-md-5">
+        <h1 className="mt-5 childish-font">
+          Login <span>{isLoading && <Spinner />}</span>
+        </h1>
 
-        <InputField
-          type="password"
-          title="Password"
-          value={password}
-          name="password"
-          onChange={handleChange}
-        />
-        <p className="mt-2 text-danger">{error}</p>
-        <button
-          type="submit"
-          className="btn btn-outline-primary font-weight-bold col-sm-4 mt-3"
-          disabled={!isEnabled}
+        <form
+          className="form-group col-sm-8 col-md-7 col-lg-5"
+          onSubmit={handleSubmit}
         >
-          Submit
-        </button>
-      </form>
-      <p className="text-primary">Forgot password?</p>
-      <p className="text-center">
-        Dont' have an account? <Link to="/signup"> Sign up</Link>
-      </p>
+          <InputField
+            title="Email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+
+          <InputField
+            type="password"
+            title="Password"
+            value={password}
+            name="password"
+            onChange={handleChange}
+          />
+
+          <p className="mt-2 text-danger">{error}</p>
+          <button
+            type="submit"
+            className="btn btn-outline-primary font-weight-bold col-sm-4 mt-3"
+            disabled={!isEnabled}
+          >
+            Submit
+          </button>
+
+          <p className="text-primary mt-3">Forgot password?</p>
+        </form>
+        <p className="text-center">
+          Dont' have an account? <Link to="/signup"> Sign up</Link>
+        </p>
+      </div>
     </div>
   );
 }
