@@ -9,6 +9,9 @@ function EditQuote(props) {
   const [quote, setQuote] = useState({});
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isNameError, setIsNameError] = useState(false);
+  const [isAgeError, setIsAgeError] = useState(false);
+  const [isContentError, setIsContentError] = useState(false);
   const { user } = useContext(context);
   const [isUpdated, setIsUpdated] = useState(false);
 
@@ -35,13 +38,22 @@ function EditQuote(props) {
     const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
     const validName = new RegExp(/^[a-zA-Z][a-zA-Z\\s]+$/);
     if (!quote.content.match(validContent)) {
+      setIsContentError(true);
       return "Please enter valid characters for content, no special symbols.";
+    } else {
+      setIsContentError(false);
     }
     if (!String(quote.age).match(validAge)) {
+      setIsAgeError(true);
       return "Please enter valid age";
+    } else {
+      setIsAgeError(false);
     }
     if (!quote.kid_name.match(validName)) {
+      setIsNameError(true);
       return "Please enter valid characters for name.";
+    } else {
+      setIsNameError(false);
     }
     return;
   };
@@ -75,6 +87,7 @@ function EditQuote(props) {
           <div className="d-flex flex-column">
             <InputField
               required
+              className={`${isNameError && "border-danger"}`}
               title="Child's name"
               value={quote.kid_name}
               name="kid_name"
@@ -82,6 +95,7 @@ function EditQuote(props) {
             />
             <InputField
               required
+              className={`${isAgeError && "border-danger"}`}
               type="number"
               pattern="\d*"
               maxLength="2"
@@ -93,6 +107,7 @@ function EditQuote(props) {
             />
             <InputField
               required
+              className={`${isContentError && "border-danger"}`}
               title="They said what?"
               value={quote.content}
               name="content"
