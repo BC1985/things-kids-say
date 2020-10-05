@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { apiService } from "../../Services/apiServices";
 import InputField from "../InputFields/InputField";
 import DeleteQuote from "../Delete button/DeleteButton";
+import Spinner from "../Spinner/Spinner";
+import { context } from "../../Context";
+
 function EditQuote(props) {
   const [quote, setQuote] = useState({});
-  const [message, setMessage] = useState("Loading...");
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useContext(context);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const quoteId = props.match.params.id;
   useEffect(() => {
     const getQuoteById = async () => {
       const quoteData = await apiService.getQuoteById(quoteId);
       setQuote(quoteData);
-      setMessage("");
+      setIsLoading(false);
     };
     getQuoteById();
   }, [quoteId]);
@@ -48,24 +51,26 @@ function EditQuote(props) {
     e.preventDefault();
     const invalidInput = validateInput();
     if (invalidInput) {
-      setError(invalidInput);
+      setMessage(invalidInput);
     } else {
       const data = await apiService.updateQuote(quoteId, quote);
       if (data !== undefined) {
-        setSuccessMessage(data.message);
-        setError("");
+        setMessage(data.message);
+        setIsUpdated(true);
+        setTimeout(() => {
+          props.history.push(`/my_quotes/user/${user._id}`);
+        }, 1000);
       } else {
-        setError(data);
+        setMessage(data);
       }
     }
   };
 
   return (
-    <>
-      <div className="container">
-        <h1>{message}</h1>
-      </div>
-      {!message && (
+    <div className="container">
+      {isLoading ? (
+        <Spinner />
+      ) : (
         <form onSubmit={onSubmit} className="p-4">
           <div className="d-flex flex-column">
             <InputField
@@ -104,9 +109,11 @@ function EditQuote(props) {
           <DeleteQuote id={quoteId} />
         </form>
       )}
-      {error}
-      {successMessage}
-    </>
+      <p className="pl-4">
+        {message}
+        {isUpdated && <Spinner />}
+      </p>
+    </div>
   );
 }
 
