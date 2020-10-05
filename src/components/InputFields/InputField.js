@@ -9,7 +9,7 @@ const InputField = props => {
       <input
         validation={props.validation}
         title={props.title}
-        className="form-control shadow-sm mb-3"
+        className={`${props.className} form-control shadow-sm mb-3`}
         placeholder={props.placeholder}
         name={props.name}
         pattern={props.pattern}
