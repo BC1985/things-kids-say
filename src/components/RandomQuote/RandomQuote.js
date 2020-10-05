@@ -34,9 +34,11 @@ function RandomQuote() {
 
   return (
     <div className="container text-center">
-      <h2 style={quoteStyle} className="container">
-        "{generateRandomQuote()}"
-      </h2>
+      <div className="row">
+        <h2 style={quoteStyle} className="container">
+          "{generateRandomQuote()}"
+        </h2>
+      </div>
       <button
         style={{
           backgroundColor: "teal",
