@@ -5,8 +5,8 @@ import DeleteQuote from "../Delete button/DeleteButton";
 function EditQuote(props) {
   const [quote, setQuote] = useState({});
   const [message, setMessage] = useState("Loading...");
+  const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
 
 
   const quoteId = props.match.params.id;
@@ -25,13 +25,39 @@ function EditQuote(props) {
       ...quote,
       [name]: value,
     });
-    String(value).trim() === "" ? setIsDisabled(true) : setIsDisabled(false);
   };
 
+  const validateInput = () => {
+    const validAge = new RegExp(/^[0-9]{1,2}$/);
+    const validContent = new RegExp(/^(?=.*[A-Z0-9])[\w.,!"'/$ ]+$/i);
+    const validName = new RegExp(/^[a-zA-Z][a-zA-Z\\s]+$/);
+    if (!quote.content.match(validContent)) {
+      return "Please enter valid characters for content, no special symbols.";
+    }
+    if (!String(quote.age).match(validAge)) {
+      return "Please enter valid age";
+    }
+    if (!quote.kid_name.match(validName)) {
+      return "Please enter valid characters for name.";
+    }
+    return;
+  };
+  // sending is enabled only if all fields are populated
+  const isEnabled = quote.content && quote.age && quote.kid_name;
   const onSubmit = async e => {
     e.preventDefault();
-    const data = await apiService.updateQuote(quoteId, quote);
-    setSuccessMessage(data.message);
+    const invalidInput = validateInput();
+    if (invalidInput) {
+      setError(invalidInput);
+    } else {
+      const data = await apiService.updateQuote(quoteId, quote);
+      if (data !== undefined) {
+        setSuccessMessage(data.message);
+        setError("");
+      } else {
+        setError(data);
+      }
+    }
   };
 
   return (
@@ -51,6 +77,10 @@ function EditQuote(props) {
             />
             <InputField
               required
+              type="number"
+              pattern="\d*"
+              maxLength="2"
+              min="1"
               title="Age"
               value={quote.age}
               name="age"
@@ -66,14 +96,15 @@ function EditQuote(props) {
           </div>
           <button
             type="submit"
-            disabled={isDisabled}
+            disabled={!isEnabled}
             className="btn btn-outline-primary font-weight-bold col-sm-2 mt-3"
           >
             Submit
           </button>
-          <DeleteQuote id={quoteId}/>
+          <DeleteQuote id={quoteId} />
         </form>
       )}
+      {error}
       {successMessage}
     </>
   );
