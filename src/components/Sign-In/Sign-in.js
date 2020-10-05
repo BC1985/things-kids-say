@@ -6,7 +6,8 @@ function SignIn(props) {
   const [isEmailError, setIsEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
-  const { email, password, username } = input;
+  const [isPasswordRepeatError, setIsPasswordRepeatError] = useState("");
+  const { email, password, username, passwordRepeat } = input;
 
   const postUser = async user => {
     try {
@@ -30,7 +31,6 @@ function SignIn(props) {
         setIsEmailError(emailErrors);
       } else {
         // if no errors, redirect to homepage and log in user
-        props.logInUser();
         props.history.push("/");
       }
       localStorage.setItem("jwt token", data.token);
@@ -42,12 +42,16 @@ function SignIn(props) {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const credentials = {
-        email: String(email).trim(),
-        password: String(password).trim(),
-        username: String(username).trim(),
-      };
-      postUser(credentials);
+      if (password !== passwordRepeat) {
+        setIsPasswordRepeatError(`passwords don't match`);
+      } else {
+        const credentials = {
+          email: String(email).trim(),
+          password: String(password).trim(),
+          username: String(username).trim(),
+        };
+        postUser(credentials);
+      }
     } catch (err) {
       throw new Error(err);
     }
@@ -57,7 +61,7 @@ function SignIn(props) {
     setInput(input => ({ ...input, [name]: value }));
   };
   // Enable sumbmit button only when both fields are populated
-  const enabled = email && password;
+  const enabled = email && password && passwordRepeat && username;
   return (
     <>
       <div className="container">
@@ -69,30 +73,34 @@ function SignIn(props) {
               title="Email"
               placeholder="ex: me@mydomain.com"
               value={email}
-              className={`form-control shadow-sm mb-3 ${
-                isEmailError && "border-danger"
-              }`}
+              className={`${isEmailError && "border-danger"}`}
               onChange={handleChange}
             />
             <p className="font-weight-light text-danger">{isEmailError}</p>
             <InputField
               name="password"
               title="Password"
-              type="password"
               value={password}
-              className={`form-control shadow-sm mb-3 ${
-                isPasswordError && "border-danger"
-              }`}
+              className={`${isPasswordError && "border-danger"}`}
               onChange={handleChange}
             />
+            <InputField
+              name="passwordRepeat"
+              title="Repeat password"
+              type="password"
+              value={passwordRepeat}
+              className={`${isPasswordRepeatError && "border-danger"}`}
+              onChange={handleChange}
+            />
+            <p className="font-weight-light text-danger">
+              {isPasswordRepeatError}
+            </p>
             <p className="font-weight-light text-danger">{isPasswordError}</p>
             <InputField
               name="username"
               title="Username"
               value={username}
-              className={`form-control shadow-sm mb-3 ${
-                usernameError && "border-danger"
-              }`}
+              className={`${usernameError && "border-danger"}`}
               onChange={handleChange}
             />
             <p className="font-weight-light text-danger">{usernameError}</p>
