@@ -14,7 +14,7 @@ function UserIcon(props) {
   };
 
   let username = props.username;
-  let userInitial = String(username).charAt(0);
+  let userInitial = String(username).charAt(0).toUpperCase();
 
   return (
     <>
