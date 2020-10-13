@@ -31,9 +31,10 @@ function SignIn(props) {
         setIsEmailError(emailErrors);
       } else {
         // if no errors, redirect to homepage and log in user
+        localStorage.setItem("jwt token", data.token);
+        props.logInUser()
         props.history.push("/");
       }
-      localStorage.setItem("jwt token", data.token);
     } catch (err) {
       console.log(err);
     }
