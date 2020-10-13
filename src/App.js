@@ -29,7 +29,7 @@ function App() {
 
   const logInUser = () => {
     setIsSignedIn(true);
-    window.location.reload()
+    window.location.reload();
   };
 
   const logOut = () => {
@@ -77,9 +77,24 @@ function App() {
                 );
               }}
             />
-            <Route path="/signup" render={(props) => isSignedIn? <LandingPage /> : <SignIn {...props} {...loginProps} />} />
-            <Route path="/login" render={(props) => <Login {...props}{...loginProps} />} />
-            <Route path="/settings/user/:id" render={(props) => <Settings {...props} {...loginProps} />} />
+            <Route
+              path="/signup"
+              render={props =>
+                isSignedIn ? (
+                  <LandingPage />
+                ) : (
+                  <SignIn {...props} {...loginProps} />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              render={props => <Login {...props} {...loginProps} />}
+            />
+            <Route
+              path="/settings/user/:id"
+              render={props => <Settings {...props} {...loginProps} />}
+            />
             <Route
               path="/my_quotes/user/:id"
               render={props => <MyQuotes {...props} isSignedIn={isSignedIn} />}
