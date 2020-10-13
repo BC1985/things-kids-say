@@ -27,7 +27,7 @@ function Nav(props) {
             </Link>
           </li>
           <li>
-            <Link to={isSignedIn ? "add" : "login"} className="nav-link link">
+            <Link to={isSignedIn ? "/add" : "/login"} className="nav-link link">
               {isSignedIn ? "Add Quote" : "Log in"}
             </Link>
           </li>
