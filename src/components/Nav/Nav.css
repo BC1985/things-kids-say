@@ -2,30 +2,30 @@
   color: white;
   font-size: 1.3em;
 }
-.nav-link{
-  font-family: "Mouse Memoirs"
-
+.nav-link {
+  font-family: "Mouse Memoirs";
 }
 .link:hover {
   color: #fffdeb;
 }
-.nav{
+.nav {
   display: flex;
   justify-content: flex-end;
-  
 }
-.nav-wrapper{
-  background-color:teal;
-
-  
+.nav-wrapper {
+  background-color: teal;
 }
-
+.scrolled {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: teal;
+}
 @media only screen and (max-width: 600px) {
-  .nav-wrapper{
-    height:3em
+  .nav-wrapper {
+    height: 3em;
   }
-  .nav-link{
+  .nav-link {
     display: none;
   }
- 
 }
