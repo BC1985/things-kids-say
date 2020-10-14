@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserIcon from "./UserIcon/UserIcon";
 import { Link } from "react-router-dom";
 import "./Nav.css";
@@ -7,13 +7,26 @@ import { context } from "../../Context";
 function Nav(props) {
   const { fetchUsername, user } = useContext(context);
   const { isSignedIn, logOut } = props;
+  const [scrolled, setScrolled] = useState(false);
   // watch for loggin in, then display icon
   useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
     isSignedIn && fetchUsername();
   }, [isSignedIn]);
 
+  const handleScroll = () => {
+    const offset = window.scrollY;
+    if (offset > 1) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  const scrollClass = scrolled ? "nav-wrapper scrolled" : "nav-wrapper";
+
   return (
-    <div className="nav-wrapper">
+    <div className={scrollClass}>
       <nav>
         <ul className="nav">
           <li>
@@ -38,14 +51,13 @@ function Nav(props) {
               </Link>
             )}
           </li>
-          {isSignedIn && 
-          <li>
-            <Link to={`/settings/user/${user._id}`} className="nav-link link">
-              {<UserIcon username={user.username} />}
-            </Link>
-          
-          </li>
-          }
+          {isSignedIn && (
+            <li>
+              <Link to={`/settings/user/${user._id}`} className="nav-link link">
+                {<UserIcon username={user.username} />}
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </div>
