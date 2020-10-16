@@ -11,6 +11,11 @@ function SideNav(props) {
 
   const routes = [
     {
+      to: "/",
+      name: "Home",
+      onClick: toggleSideNav,
+    },
+    {
       to: "/list",
       name: "All quotes",
       onClick: toggleSideNav,
@@ -32,12 +37,20 @@ function SideNav(props) {
       onClick: logOut,
     },
   ];
-
+  const Overlay = () => {
+    return (
+      <div
+        className={isSideNavOpen ? "overlay" : null}
+        onClick={isSideNavOpen ? toggleSideNav : null}
+      ></div>
+    );
+  };
   // close sidenav on menu click
 
   let sideNavClass = isSideNavOpen ? "nav-links open" : "nav-links";
   return (
     <>
+      <Overlay isSideNavOpen={isSideNavOpen} />
       <NavToggleButton
         toggleSideNav={toggleSideNav}
         isSideNavOpen={isSideNavOpen}
@@ -45,9 +58,9 @@ function SideNav(props) {
       <nav>
         <ul className={sideNavClass}>
           {isSignedIn && (
-          <li>
-            <UserIcon username={user} />
-          </li>
+            <li>
+              <UserIcon username={user} />
+            </li>
           )}
           {routes.map(route => (
             <li key={route.name}>

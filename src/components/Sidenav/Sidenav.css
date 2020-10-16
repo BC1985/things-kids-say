@@ -52,6 +52,13 @@
 .nav-links li:nth-child(6) {
   transition: all 0.1s ease 0.7s;
 }
+.overlay {
+  position: absolute;
+  left: 0;
+  top:0;
+  height: 100vh;
+  width: 100vw;   
+}
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
 }
 /* Landscape */
