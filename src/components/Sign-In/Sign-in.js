@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiService } from "../../Services/apiServices";
 import InputField from "../InputFields/InputField";
 
 function SignIn(props) {
@@ -11,14 +12,7 @@ function SignIn(props) {
 
   const postUser = async user => {
     try {
-      const res = await fetch("http://localhost:5000/users/add", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      const data = await res.json();
+      const data = await apiService.postUser(user)
       if (Object.keys(data).includes("errors")) {
         // errors from the backend
         const { email, password, username } = data.errors;

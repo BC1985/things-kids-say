@@ -27,10 +27,7 @@ export const apiService = {
         body: JSON.stringify(user),
       });
       const data = await res.json();
-      if (!res.ok) {
-        throw new Error(res.status);
-      }
-      localStorage.setItem("jwt token", data.token);
+      return data
     } catch (err) {
       throw new Error(err);
     }
