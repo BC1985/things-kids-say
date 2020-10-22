@@ -29,11 +29,10 @@ Project is created with:
 - Clone this repo to your desktop and run `npm install` to install all the dependencies. When you're done, type `npm start`.
 
 ### Features 
-* Random colors on landing page refresh 
+* Fully functional NodeJS backend 
+* User authentication
+* All CRUD API operations supported
 * Responsive layout
-* Input form for uploading quotes to database
-* Get random quotes from database or full list
-
 
 ### Screenshots
 <img src="src/Images/tks_screenshot1.png" width="550">
