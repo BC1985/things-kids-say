@@ -62,7 +62,7 @@ function SignIn(props) {
       <div className="container">
         <h1 className="childish-font p-3 pt-5">Sign up to post quote</h1>
         <form className="form-group" onSubmit={handleSubmit}>
-          <div className="d-flex flex-column col-sm-8">
+          <div className="d-flex flex-column col-sm-8" style={{position:"static"}}>
             <InputField
               name="email"
               title="Email"

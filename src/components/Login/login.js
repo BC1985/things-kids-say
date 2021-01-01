@@ -81,7 +81,7 @@ function Login(props) {
         </h1>
 
         <form
-          className="form-group col-sm-8 col-md-7 col-lg-5"
+          className="form-group col-sm-8 col-md-7 col-lg-5" style={{position:"static"}} 
           onSubmit={handleSubmit}
         >
           <InputField
