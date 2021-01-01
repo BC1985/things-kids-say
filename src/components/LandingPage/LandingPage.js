@@ -22,10 +22,10 @@ const LandingText = () => {
       fontFamily:"Lato"
     };
     return (
-      <h3 style={randomQuoteColor}>
+      <h2 style={randomQuoteColor}>
         "There are no seven wonders of the world in the eyes of children, there
         are seven million."
-      </h3>
+      </h2>
     );
   };
   const Description = () => {
@@ -36,13 +36,13 @@ const LandingText = () => {
       })
     };
     return (
-      <h4 style={randomDescriptionColor}>
+      <h3 style={randomDescriptionColor}>
         Welcome to Things Kids Say. Here you can add you child's pearls of
         wisdom to the database of adorable quotes and thoughtful truthisms.{" "}
         You can <Link to="/list">view all entries</Link>,{" "}
         <Link to="/add">add your own</Link> or{" "}
         <Link to="/random">get random quote</Link>
-      </h4>
+      </h3>
     );
   };
   return (

@@ -27,9 +27,9 @@ function FullList() {
       <>
         <div className="mb-4">
           <p>Select number of quotes per page</p>
-          <select onChange={handleChange} value={quotesPerPage}>
+          <select onChange={handleChange} value={quotesPerPage} aria-label="quotes-per-page">
             {quotesPerPageArray.map((postsPerPage, index) => (
-              <option key={index}>{postsPerPage}</option>
+              <option key={index} id={quotesPerPage}>{postsPerPage}</option>
             ))}
           </select>
         </div>
@@ -38,13 +38,13 @@ function FullList() {
           return <Quote quote={quote} key={index} />;
         })}
 
-        <ul className="list-group">
+        {/* <ul className="list-group"> */}
           <Pagination
             quotesPerPage={quotesPerPage}
             totalQuotes={sayings.length}
             paginate={paginate}
           />
-        </ul>
+        {/* </ul> */}
         <div className="back-button-div">
           <Link to="/">
             <p className="mt-5 mb-5 font-weight-bold">Back to homepage</p>
