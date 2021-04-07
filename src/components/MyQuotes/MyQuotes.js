@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { context } from "../../Context";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../Spinner/Spinner";
@@ -21,6 +21,12 @@ function MyQuotes(props) {
     fetchData();
   }, [sayings, props.match.params.id]);
 
+  // cleanup effect
+  useEffect(() => {
+    return () => {
+      console.log("cleaned up");
+    };
+  }, []);
   const editIcon = (
     <FontAwesomeIcon
       icon={faPencilAlt}
@@ -38,7 +44,7 @@ function MyQuotes(props) {
       if (isLoading) {
         return <Spinner />;
       } else {
-        return "You have no quotes.";
+        return <Redirect to="/" />;
       }
     }
   };
