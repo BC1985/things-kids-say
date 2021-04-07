@@ -5,11 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../Spinner/Spinner";
 import { apiService } from "../../Services/apiServices";
-
 function MyQuotes(props) {
   const { sayings } = useContext(context);
   const [quotesByUser, setQuotesByUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
     const fetchData = async () => {
       let id = props.match.params.id;
       const userQuotes = await apiService.getQuotesByUser(id);
@@ -25,6 +28,20 @@ function MyQuotes(props) {
     />
   );
 
+  const renderContent = () => {
+    // if there are quotes
+    if (quotesByUser.length > 0) {
+      return <QuotesList />;
+    }
+    // if no quotes
+    else {
+      if (isLoading) {
+        return <Spinner />;
+      } else {
+        return "You have no quotes.";
+      }
+    }
+  };
   const QuotesList = () => {
     return (
       <div>
@@ -46,11 +63,7 @@ function MyQuotes(props) {
       </div>
     );
   };
-  return (
-    <div className="container mt-3">
-      {quotesByUser.length > 0 ? <QuotesList /> : <Spinner />}
-    </div>
-  );
+  return <div className="container mt-3">{renderContent()}</div>;
 }
 
 export default MyQuotes;
