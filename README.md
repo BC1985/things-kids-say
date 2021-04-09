@@ -2,7 +2,7 @@
 
 #### Add and browse through funny quotes by little kids. 
 
-## [Live app](https://things-kids-say.netlify.app/)
+
 
 
 
