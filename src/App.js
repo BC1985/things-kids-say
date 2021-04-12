@@ -15,6 +15,7 @@ import EditQuote from "./components/EditQuote/EditQuote";
 import MyQuotes from "./components/MyQuotes/MyQuotes";
 import SideNav from "./components/Sidenav/Sidenav";
 import Settings from "./components/settings/Settings";
+import SearchResults from "./components/search/SearchResults";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -98,6 +99,10 @@ function App() {
             <Route
               path="/my_quotes/user/:id"
               render={props => <MyQuotes {...props} isSignedIn={isSignedIn} />}
+            />
+            <Route
+               path="/search"
+              render={props => <SearchResults {...props} />}
             />
           </ContextProvider>
         </Switch>
