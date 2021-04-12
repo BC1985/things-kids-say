@@ -11,7 +11,7 @@ const Search = ({ sayings }) => {
   const searchQuotes = e => {
     e.preventDefault();
     let filter = sayings.filter(x => {
-      return x.content.includes(search);
+      return x.content.toLowerCase().includes(search.toLowerCase());
     });
     setSearchResults(filter);
   };
