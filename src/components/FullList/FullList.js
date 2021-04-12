@@ -5,6 +5,7 @@ import Quote from "../Quote/Quote";
 import Pagination from "../Pagination/Pagination";
 import { context } from "../../Context";
 import Spinner from "../Spinner/Spinner";
+import Search from "../search/Search";
 function FullList() {
   const { sayings, isLoading } = useContext(context);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,11 +26,18 @@ function FullList() {
   const MainContent = () => {
     return (
       <>
+        <Search sayings={sayings} />
         <div className="mb-4">
           <p>Select number of quotes per page</p>
-          <select onChange={handleChange} value={quotesPerPage} aria-label="quotes-per-page">
+          <select
+            onChange={handleChange}
+            value={quotesPerPage}
+            aria-label="quotes-per-page"
+          >
             {quotesPerPageArray.map((postsPerPage, index) => (
-              <option key={index} id={quotesPerPage}>{postsPerPage}</option>
+              <option key={index} id={quotesPerPage}>
+                {postsPerPage}
+              </option>
             ))}
           </select>
         </div>
@@ -39,11 +47,11 @@ function FullList() {
         })}
 
         {/* <ul className="list-group"> */}
-          <Pagination
-            quotesPerPage={quotesPerPage}
-            totalQuotes={sayings.length}
-            paginate={paginate}
-          />
+        <Pagination
+          quotesPerPage={quotesPerPage}
+          totalQuotes={sayings.length}
+          paginate={paginate}
+        />
         {/* </ul> */}
         <div className="back-button-div">
           <Link to="/">
