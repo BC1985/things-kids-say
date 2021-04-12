@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Redirect } from "react-router";
 import InputFields from "../InputFields/InputField";
-import Quote from "../Quote/Quote";
 const Search = ({ sayings }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -15,19 +15,14 @@ const Search = ({ sayings }) => {
     });
     setSearchResults(filter);
   };
-  const Results = () => {
-    return (
-      <div>
-        {searchResults.map(q => {
-          return <Quote quote={q} key={q._id} />;
-        })}
-      </div>
-    );
-  };
   return (
     <div>
-      <form onSubmit={searchQuotes}>        
-        {searchResults && <Results />}
+      <form onSubmit={searchQuotes}>
+        {searchResults.length !== 0 && (
+          <Redirect
+            to={{ pathname: `/search`, state: searchResults, search: search }}
+          />
+        )}
         <InputFields
           name="search"
           type="text"
