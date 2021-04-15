@@ -1,7 +1,8 @@
+export const baseUrl= 'https://things-kids-say.herokuapp.com';
 export const apiService = {
   addNewEntry: async entry => {
     const token = localStorage.getItem("jwt token");
-    const res = await fetch("http://localhost:5000/sayings/add", {
+    const res = await fetch(`${baseUrl}/sayings/add`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -19,7 +20,7 @@ export const apiService = {
 
   postUser: async user => {
     try {
-      const res = await fetch("http://localhost:5000/users/add", {
+      const res = await fetch(`${baseUrl}/users/add`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -33,7 +34,7 @@ export const apiService = {
     }
   },
   seeIfUserExists: async enteredUser => {
-    const req = await fetch("http://localhost:5000/users");
+    const req = await fetch(`${baseUrl}/users`);
     const data = await req.json();
     const existingUser = data.filter(user => user.email === enteredUser.email);
     if (existingUser.length !== 0) {
@@ -45,7 +46,7 @@ export const apiService = {
   getUserObject: async () => {
     const token = localStorage.getItem("jwt token");
 
-    const res = await fetch(`http://localhost:5000/users/current-user`, {
+    const res = await fetch(`${baseUrl}/users/current-user`, {
       method: "GET",
       headers: {
         authorization: `bearer ${token}`,
@@ -60,7 +61,7 @@ export const apiService = {
   },
   getQuotesByUser: async id => {
     const token = localStorage.getItem("jwt token");
-    const res = await fetch(`http://localhost:5000/sayings/users/${id}`, {
+    const res = await fetch(`${baseUrl}/sayings/users/${id}`, {
       method: "GET",
       headers: {
         authorization: `bearer ${token}`,
@@ -74,7 +75,7 @@ export const apiService = {
     }
   },
   getQuoteById: async id => {
-    const res = await fetch(`http://localhost:5000/sayings/${id}`);
+    const res = await fetch(`${baseUrl}/sayings/${id}`);
     try {
       if (res.ok) {
         const data = await res.json();
@@ -88,7 +89,7 @@ export const apiService = {
   },
   updateQuote: async (id, quoteToUpdate) =>{
     const token = localStorage.getItem("jwt token");
-    const url = `http://localhost:5000/sayings/update/${id}`;
+    const url = `${baseUrl}/sayings/update/${id}`;
     const res = await fetch(url, {
       method: "PUT",
       headers: {
@@ -102,7 +103,7 @@ export const apiService = {
   },
   deleteQuote: async (id)=>{
     const token = localStorage.getItem("jwt token");
-    const url = `http://localhost:5000/sayings/${id}`;
+    const url = `${baseUrl}/sayings/${id}`;
     const res = await fetch(url, {
       method: "DELETE",
       headers: {

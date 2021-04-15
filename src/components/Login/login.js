@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import InputField from "../InputFields/InputField";
 import Spinner from "../Spinner/Spinner";
+import { baseUrl } from "../../Services/apiServices";
 
 function Login(props) {
   const [input, setInput] = useState({});
@@ -33,7 +34,7 @@ function Login(props) {
         throw new Error();
       }
       setError("");
-      const url = "http://localhost:5000/login";
+      const url = `${baseUrl}/login`;
       const res = await fetch(url, {
         method: "POST",
         headers: {

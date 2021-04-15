@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
-import { apiService } from "./Services/apiServices";
+import { apiService, baseUrl } from "./Services/apiServices";
 require("dotenv").config();
 
 const context = createContext();
@@ -10,7 +10,7 @@ function ContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState({});
 
-  const uri = "http://localhost:5000/sayings";
+  const uri = `${baseUrl}/sayings`;
 
   // fetch data from api
   useEffect(() => {
