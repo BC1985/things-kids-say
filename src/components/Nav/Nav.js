@@ -35,7 +35,7 @@ function Nav(props) {
             </Link>
           </li>
           <li>
-            <Link to="/list" className="nav-link link">
+            <Link to="/quotes" className="nav-link link">
               All quotes
             </Link>
           </li>

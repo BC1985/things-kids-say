@@ -16,7 +16,7 @@ function SideNav(props) {
       onClick: toggleSideNav,
     },
     {
-      to: "/list",
+      to: "/quotes/:p",
       name: "All quotes",
       onClick: toggleSideNav,
     },

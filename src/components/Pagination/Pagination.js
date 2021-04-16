@@ -1,27 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
-function Pagination({ quotesPerPage, totalQuotes, paginate }) {
-  const pageNumbers = [];
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
-  for (let i = 1; i <= Math.ceil(totalQuotes / quotesPerPage); i++) {
-    pageNumbers.push(i);
-  }
+const icons = {
+  right: <FontAwesomeIcon icon={faChevronRight} className="ml-3" />,
+  left: <FontAwesomeIcon icon={faChevronLeft} className="ml-3" />,
+};
+function Pagination({ pages, page, changePage }) {
   return (
-    <nav>
+    pages > 1 && (
       <ul className="pagination">
-        {pageNumbers.map(number => (
-          <li key={number} className="page-item">
-            <Link
-              to={`/list/${number}`}
-              onClick={() => paginate(number)}
-              className="page-link"
-            >
-              {number}
-            </Link>
-          </li>
-        ))}
+        <button
+          className="btn"
+          onClick={() => changePage(page => parseInt(page) - 1)}
+          disabled={page === 1}
+        >
+          {icons.left}
+        </button>
+        <button
+          className="btn"
+          onClick={() => changePage(page => parseInt(page) + 1)}
+          disabled={page === pages}
+        >
+          {icons.right}
+        </button>
       </ul>
-    </nav>
+    )
   );
 }
 

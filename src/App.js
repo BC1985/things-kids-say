@@ -61,7 +61,7 @@ function App() {
             <SideNav {...navProps} />
             <Nav {...navProps} />
             <Route exact path="/" component={LandingPage} />
-            <Route path="/list" component={FullList} />
+            <Route path="/quotes/:p" component={FullList} />
             <Route
               path="/edit/:id"
               render={props => <EditQuote {...props} />}

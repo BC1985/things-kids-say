@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from "react";
-import axios from "axios";
 import { apiService, baseUrl } from "./Services/apiServices";
 require("dotenv").config();
 
@@ -7,21 +6,31 @@ const context = createContext();
 
 function ContextProvider({ children }) {
   const [sayings, setSayings] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState({});
 
-  const uri = `${baseUrl}/sayings`;
-
+  const uri = `${baseUrl}/sayings?page=${page}`;
   // fetch data from api
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const res = await axios.get(uri);
-      setSayings(res.data);
-      setIsLoading(false);
-    };
+    try {
+        const res = await fetch(uri);
+
+        const { data, pages: totalPages } = await res.json()
+
+        setPages(totalPages);
+        setSayings(data);
+        setIsLoading(false);
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
+  }
     fetchData();
-  }, []);
+  }, [page]);
 
   const fetchUsername = async () => {
     const res = await apiService.getUserObject();
@@ -33,7 +42,7 @@ function ContextProvider({ children }) {
   };
 
   return (
-    <context.Provider value={{ sayings, isLoading, user, fetchUsername }}>
+    <context.Provider value={{ sayings, isLoading, user, setPage, fetchUsername, page, pages,setPages }}>
       {children}
     </context.Provider>
   );
