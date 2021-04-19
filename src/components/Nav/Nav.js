@@ -27,7 +27,7 @@ function Nav(props) {
 
   return (
     <div className={scrollClass}>
-      <nav>
+      <nav className="flex">
         <ul className="nav">
           <li>
             <Link to="/" className="nav-link link">
@@ -51,14 +51,14 @@ function Nav(props) {
               </Link>
             )}
           </li>
+          </ul>
           {isSignedIn && (
-            <li>
+            <div>
               <Link to={`/settings/user/${user._id}`} className="nav-link link">
                 {<UserIcon username={user.username} />}
               </Link>
-            </li>
+            </div>
           )}
-        </ul>
       </nav>
     </div>
   );
