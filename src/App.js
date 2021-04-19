@@ -19,6 +19,7 @@ import Settings from "./components/settings/Settings";
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 600);
 
   useEffect(() => {
     const userAlreadyLoggedIn = localStorage.getItem("jwt token");
@@ -33,9 +34,17 @@ function App() {
   };
 
   const logOut = () => {
+    const updateMedia = () => {
+      setDesktop(window.innerWidth > 600);
+    };
+    const resize = () => {
+      window.addEventListener("resize", updateMedia);
+      return () => window.removeEventListener("resize", updateMedia);
+    };
+    resize();
     setIsSignedIn(false);
     localStorage.removeItem("jwt token");
-    toggleSideNav();
+    !isDesktop && toggleSideNav();
   };
   const toggleSideNav = () => {
     setIsSideNavOpen(!isSideNavOpen);
