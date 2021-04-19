@@ -59,7 +59,7 @@ function SideNav({ toggleSideNav, isSideNavOpen, logOut, isSignedIn }) {
         <ul className={sideNavClass}>
           {isSignedIn && (
             <li>
-              <UserIcon username={user} />
+              <UserIcon username={user.username} />
             </li>
           )}
           {routes.map(route => (
