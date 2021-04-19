@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import "./Nav.css";
 import { context } from "../../Context";
 
-function Nav(props) {
+function Nav({ isSignedIn, logOut }) {
   const { fetchUsername, user } = useContext(context);
-  const { isSignedIn, logOut } = props;
   const [scrolled, setScrolled] = useState(false);
   // watch for loggin in, then display icon
   useEffect(() => {
