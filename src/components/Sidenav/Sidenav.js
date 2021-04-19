@@ -5,10 +5,20 @@ import { NavLink } from "react-router-dom";
 import UserIcon from "../Nav/UserIcon/UserIcon";
 import "./Sidenav.css";
 
-function SideNav(props) {
-  const { toggleSideNav, isSideNavOpen, logOut, isSignedIn } = props;
+function SideNav({ toggleSideNav, isSideNavOpen, logOut, isSignedIn }) {
   const { user } = useContext(context);
-
+  const authRoutes=[
+    {
+      to: "/add",
+      name: "Add quote",
+      onClick: toggleSideNav,
+    },
+    {
+      to: "/",
+      name: isSignedIn ? "Log out" : "",
+      onClick: logOut,
+    },
+  ]
   const routes = [
     {
       to: "/",
@@ -21,20 +31,10 @@ function SideNav(props) {
       onClick: toggleSideNav,
     },
     {
-      to: "/add",
-      name: "Add quote",
-      onClick: toggleSideNav,
-    },
-    {
       // to: `my_quotes/user/${user._id}`,
       to: isSignedIn ? `my_quotes/user/${user._id}` : "login",
       name: isSignedIn ? "My Quotes" : "Log in",
       onClick: toggleSideNav,
-    },
-    {
-      to: "/",
-      name: isSignedIn ? "Log out" : "",
-      onClick: logOut,
     },
   ];
   const Overlay = () => {
@@ -63,6 +63,13 @@ function SideNav(props) {
             </li>
           )}
           {routes.map(route => (
+            <li key={route.name}>
+              <NavLink to={route.to} onClick={route.onClick}>
+                {route.name}
+              </NavLink>
+            </li>
+          ))}
+          {isSignedIn &&  authRoutes.map(route => (
             <li key={route.name}>
               <NavLink to={route.to} onClick={route.onClick}>
                 {route.name}
