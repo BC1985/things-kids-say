@@ -1,6 +1,6 @@
 import React from "react";
 
-function UserIcon(props) {
+function UserIcon({username}) {
   const iconStyle = {
     borderRadius: "50%",
     width: "30px",
@@ -13,7 +13,6 @@ function UserIcon(props) {
     fontFamily: "Lato",
   };
 
-  let username = props.username;
   let userInitial = String(username).charAt(0).toUpperCase();
 
   return (
