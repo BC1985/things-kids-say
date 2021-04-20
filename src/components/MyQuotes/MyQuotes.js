@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { context } from "../../Context";
 import { Link, Redirect } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../Spinner/Spinner";
 import { apiService } from "../../Services/apiServices";
+import { icons } from "../../helpers"
+
 function MyQuotes(props) {
   const { sayings } = useContext(context);
   const [quotesByUser, setQuotesByUser] = useState([]);
@@ -27,12 +27,6 @@ function MyQuotes(props) {
       console.log("cleaned up");
     };
   }, []);
-  const editIcon = (
-    <FontAwesomeIcon
-      icon={faPencilAlt}
-      className="text-danger edit-icon ml-3"
-    />
-  );
 
   const renderContent = () => {
     // if there are quotes
@@ -61,7 +55,7 @@ function MyQuotes(props) {
             >
               <div className="item d-flex">
                 <p className="item">"{quote.content}"</p>
-                <Link to={`/edit/${quote._id}`}>{editIcon}</Link>
+                <Link to={`/edit/${quote._id}`}>{ icons.edit }</Link>
               </div>
             </li>
           );

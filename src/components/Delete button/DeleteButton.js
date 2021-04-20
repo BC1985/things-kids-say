@@ -1,15 +1,10 @@
 import React, { useState, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashAlt,
-  faCheckCircle,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
 
 import { apiService } from "../../Services/apiServices";
 import Spinner from "../Spinner/Spinner";
 import { withRouter } from "react-router";
 import { context } from "../../Context";
+import { icons } from "../../helpers"
 
 function DeleteQuote(props) {
   const { user } = useContext(context);
@@ -19,12 +14,6 @@ function DeleteQuote(props) {
     message: "",
     isConfirmed: false,
   });
-
-  const icons = {
-    trash: <FontAwesomeIcon icon={faTrashAlt} className=" edit-icon ml-3" />,
-    check: <FontAwesomeIcon icon={faCheckCircle} className="ml-3" />,
-    abort: <FontAwesomeIcon icon={faTimesCircle} className="ml-3" />,
-  };
 
   const deleteIcon = (
     <div>
