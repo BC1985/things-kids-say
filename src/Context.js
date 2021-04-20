@@ -11,20 +11,20 @@ function ContextProvider({ children }) {
 
   const uri = `${baseUrl}/sayings/all`;
   // fetch data from api
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-    try {
-        const res = await fetch(uri);
-        const data = await res.json()
+  const fetchData = async () => {
+    setIsLoading(true);
+  try {
+      const res = await fetch(uri);
+      const data = await res.json()
 
-        setSayings(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error)
-        setIsLoading(false)
-      }
+      setSayings(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
     }
+  }
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -38,7 +38,7 @@ function ContextProvider({ children }) {
   };
 
   return (
-    <context.Provider value={{ sayings, isLoading, user, fetchUsername }}>
+    <context.Provider value={{ sayings, isLoading, user, fetchUsername, fetchData }}>
       {children}
     </context.Provider>
   );
