@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserIcon from "./UserIcon/UserIcon";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import { context } from "../../Context";
 
@@ -24,40 +24,62 @@ function Nav({ isSignedIn, logOut }) {
 
   const scrollClass = scrolled ? "nav-wrapper scrolled" : "nav-wrapper";
 
+  const baseRoutes = [
+    {
+      to: "/",
+      name: "Home",
+      needsAuth: false,
+    },
+    {
+      to: "/quotes",
+      name: "All quotes",
+      needsAuth: false,
+    },
+    {
+      to: "/add",
+      name: "Add quote",
+      needsAuth: isSignedIn ? false : true,
+    },
+    {
+      to: !isSignedIn ? "/login" : "/",
+      name: !isSignedIn ? "Log in" : "Log out",
+      onClick: logOut,
+    },
+  ];
+  const routes = baseRoutes
+    .filter(route => {
+      if (route.needsAuth === true) {
+        return false;
+      }
+      return true;
+    })
+    .map(route => {
+      return (
+        <li key={route.name}>
+          <NavLink
+            to={route.to}
+            onClick={route.onClick}
+            className="nav-link link"
+          >
+            {route.name}
+          </NavLink>
+        </li>
+      );
+    });
   return (
     <div className={scrollClass}>
       <nav className="flex">
-        <ul className="nav">
-          <li>
-            <Link to="/" className="nav-link link">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/quotes" className="nav-link link">
-              All quotes
-            </Link>
-          </li>
-          <li>
-            <Link to={isSignedIn ? "/add" : "/login"} className="nav-link link">
-              {isSignedIn ? "Add Quote" : "Log in"}
-            </Link>
-          </li>
-          <li>
-            {isSignedIn && (
-              <Link to="/" className="nav-link link" onClick={logOut}>
-                Log out
-              </Link>
-            )}
-          </li>
-          </ul>
-          {isSignedIn && (
-            <div>
-              <Link to={`/settings/user/${user._id}`} className="nav-link link">
-                {<UserIcon username={user.username} />}
-              </Link>
-            </div>
-          )}
+        <ul className="nav">{routes}</ul>
+        {isSignedIn && (
+          <div>
+            <NavLink
+              to={`/settings/user/${user._id}`}
+              className="nav-link link"
+            >
+              {<UserIcon username={user.username} />}
+            </NavLink>
+          </div>
+        )}
       </nav>
     </div>
   );
