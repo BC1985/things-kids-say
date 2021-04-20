@@ -58,7 +58,7 @@ function SignIn(props) {
   };
 
   const isVisible = isPasswordVisible ? "text" : "password";
-  
+
   const toggleVisibile = () => {
     setIsPasswordVisible(visible => !visible);
   };
@@ -82,6 +82,13 @@ function SignIn(props) {
               className={`${isEmailError && "border-danger"}`}
               onChange={handleChange}
             />
+            <InputField
+              name="username"
+              title="Username"
+              value={username}
+              className={`${usernameError && "border-danger"}`}
+              onChange={handleChange}
+            />
             <p className="font-weight-light text-danger">{isEmailError}</p>
             <InputField
               name="password"
@@ -101,7 +108,7 @@ function SignIn(props) {
               />
               <label
                 htmlFor="show-password"
-                className="text-muted form-check-label"
+                className="text-muted form-check-label mb-3"
               >
                 Show Password
               </label>
@@ -114,17 +121,15 @@ function SignIn(props) {
               className={`${isPasswordRepeatError && "border-danger"}`}
               onChange={handleChange}
             />
-            <p className="font-weight-light text-danger">
-              {isPasswordRepeatError}
-            </p>
-            <p className="font-weight-light text-danger">{isPasswordError}</p>
-            <InputField
-              name="username"
-              title="Username"
-              value={username}
-              className={`${usernameError && "border-danger"}`}
-              onChange={handleChange}
-            />
+            {isPasswordError && (
+              <p className="font-weight-light text-danger">{isPasswordError}</p>
+            )}
+            {isPasswordRepeatError && (
+              <p className="font-weight-light text-danger">
+                {isPasswordRepeatError}
+              </p>
+            )}
+
             <p className="font-weight-light text-danger">{usernameError}</p>
             <button
               type="submit"
