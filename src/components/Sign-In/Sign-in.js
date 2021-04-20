@@ -9,6 +9,7 @@ function SignIn(props) {
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isPasswordRepeatError, setIsPasswordRepeatError] = useState("");
   const { email, password, username, passwordRepeat } = input;
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const postUser = async user => {
     try {
@@ -55,6 +56,12 @@ function SignIn(props) {
     const { name, value } = e.target;
     setInput(input => ({ ...input, [name]: value }));
   };
+
+  const isVisible = isPasswordVisible ? "text" : "password";
+  const toggleVisibile = () => {
+    setIsPasswordVisible(visible => !visible);
+  };
+
   // Enable sumbmit button only when both fields are populated
   const enabled = email && password && passwordRepeat && username;
   return (
@@ -62,7 +69,10 @@ function SignIn(props) {
       <div className="container">
         <h1 className="childish-font p-3 pt-5">Sign up to post quote</h1>
         <form className="form-group" onSubmit={handleSubmit}>
-          <div className="d-flex flex-column col-sm-8" style={{position:"static"}}>
+          <div
+            className="d-flex flex-column col-sm-8"
+            style={{ position: "static" }}
+          >
             <InputField
               name="email"
               title="Email"
@@ -75,10 +85,12 @@ function SignIn(props) {
             <InputField
               name="password"
               title="Password"
+              type={isVisible}
               value={password}
               className={`${isPasswordError && "border-danger"}`}
               onChange={handleChange}
             />
+            <input type="checkbox" onClick={toggleVisibile} />
             <InputField
               name="passwordRepeat"
               title="Repeat password"
