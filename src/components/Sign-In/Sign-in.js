@@ -58,6 +58,7 @@ function SignIn(props) {
   };
 
   const isVisible = isPasswordVisible ? "text" : "password";
+  
   const toggleVisibile = () => {
     setIsPasswordVisible(visible => !visible);
   };
@@ -90,7 +91,21 @@ function SignIn(props) {
               className={`${isPasswordError && "border-danger"}`}
               onChange={handleChange}
             />
-            <input type="checkbox" onClick={toggleVisibile} />
+            <div>
+              <input
+                type="checkbox"
+                onClick={toggleVisibile}
+                className="mr-2"
+                id="show-password"
+                style={{ cursor: "pointer" }}
+              />
+              <label
+                htmlFor="show-password"
+                className="text-muted form-check-label"
+              >
+                Show Password
+              </label>
+            </div>
             <InputField
               name="passwordRepeat"
               title="Repeat password"
