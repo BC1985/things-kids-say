@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Fulllist.css";
 import { Link } from "react-router-dom";
 import Quote from "../Quote/Quote";
@@ -7,7 +7,7 @@ import { context } from "../../Context";
 import Spinner from "../Spinner/Spinner";
 
 function FullList() {
-  const { sayings, isLoading } = useContext(context);
+  const { sayings, isLoading, fetchData } = useContext(context);
   const [currentPage, setCurrentPage] = useState(1);
   const [quotesPerPage, setQuotesPerPage] = useState(5);
 
@@ -15,6 +15,11 @@ function FullList() {
   const indexOfLastQuote = currentPage * quotesPerPage;
   const indexOfFirstQuote = indexOfLastQuote - quotesPerPage;
   const currentQuotes = sayings.slice(indexOfFirstQuote, indexOfLastQuote);
+
+  useEffect(()=>{
+    fetchData()
+  },[])
+
   // change content of page on pagination
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
@@ -37,14 +42,11 @@ function FullList() {
         {currentQuotes.map((quote, index) => {
           return <Quote quote={quote} key={index} />;
         })}
-
-        {/* <ul className="list-group"> */}
           <Pagination
             quotesPerPage={quotesPerPage}
             totalQuotes={sayings.length}
             paginate={paginate}
           />
-        {/* </ul> */}
         <div className="back-button-div">
           <Link to="/">
             <p className="mt-5 mb-5 font-weight-bold">Back to homepage</p>
