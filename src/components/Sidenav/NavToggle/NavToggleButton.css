@@ -2,6 +2,7 @@
     position: fixed;
     padding: 15px;
     z-index: 4;
+    cursor: pointer;
   }
   @media only screen and (min-width: 601px) {
     #hamburger-icon{
