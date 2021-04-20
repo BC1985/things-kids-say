@@ -64,7 +64,7 @@ function Login({ isSignedIn, logInUser, history }) {
     e.preventDefault();
     try {
       setIsLoading(true);
-      login({ email: email.trim(), password: password.trim() });
+      login({ email: email.trim().toLowerCase(), password: password.trim() });
     } catch (error) {
       console.log(error);
     }
