@@ -5,7 +5,7 @@ import DeleteQuote from "../Delete button/DeleteButton";
 import Spinner from "../Spinner/Spinner";
 import { context } from "../../Context";
 
-function EditQuote(props) {
+function EditQuote({history, match}) {
   const [quote, setQuote] = useState({});
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +15,7 @@ function EditQuote(props) {
   const { user } = useContext(context);
   const [isUpdated, setIsUpdated] = useState(false);
 
-  const quoteId = props.match.params.id;
+  const quoteId = match.params.id;
   useEffect(() => {
     const getQuoteById = async () => {
       const quoteData = await apiService.getQuoteById(quoteId);
@@ -70,7 +70,7 @@ function EditQuote(props) {
         setMessage(data.message);
         setIsUpdated(true);
         setTimeout(() => {
-          props.history.push(`/my_quotes/user/${user._id}`);
+          history.push(`/my_quotes/user/${user._id}`);
         }, 1000);
       } else {
         setMessage(data);

@@ -4,18 +4,20 @@ import InputField from "../InputFields/InputField";
 import Spinner from "../Spinner/Spinner";
 import { baseUrl } from "../../Services/apiServices";
 
-function Login(props) {
-  const [input, setInput] = useState({});
+function Login({ isSignedIn, logInUser, history }) {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { isSignedIn, logInUser } = props;
   const { email, password } = input;
 
   useEffect(() => {
     // Redirect to home page if already logged in
     if (isSignedIn) {
-      props.history.push("/");
+      history.push("/");
     }
   });
 
@@ -50,7 +52,7 @@ function Login(props) {
       } else {
         // get jwt from successful login
         localStorage.setItem("jwt token", data);
-        props.history.push("/");
+        history.push("/");
         logInUser();
       }
     } catch (err) {
@@ -82,7 +84,8 @@ function Login(props) {
         </h1>
 
         <form
-          className="form-group col-sm-8 col-md-7 col-lg-5" style={{position:"static"}} 
+          className="form-group col-sm-8 col-md-7 col-lg-5"
+          style={{ position: "static" }}
           onSubmit={handleSubmit}
         >
           <InputField

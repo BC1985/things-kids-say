@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { apiService } from "../../Services/apiServices";
 import InputField from "../InputFields/InputField";
 
-function SignIn(props) {
+function SignIn({history, logInUser}) {
   const [input, setInput] = useState({});
   const [isEmailError, setIsEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -27,8 +27,8 @@ function SignIn(props) {
       } else {
         // if no errors, redirect to homepage and log in user
         localStorage.setItem("jwt token", data.token);
-        props.logInUser()
-        props.history.push("/");
+        logInUser()
+        history.push("/");
       }
     } catch (err) {
       console.log(err);
