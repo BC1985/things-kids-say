@@ -39,7 +39,7 @@ const LandingText = () => {
       <h3 style={randomDescriptionColor}>
         Welcome to Things Kids Say. Here you can add you child's pearls of
         wisdom to the database of adorable quotes and thoughtful truthisms.{" "}
-        You can <Link to="/list">view all entries</Link>,{" "}
+        You can <Link to="/quotes">view all entries</Link>,{" "}
         <Link to="/add">add your own</Link> or{" "}
         <Link to="/random">get random quote</Link>
       </h3>
